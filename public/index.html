@@ -362,6 +362,97 @@ footer {
   .needs-grid { gap: 0.5rem; }
   .msg-actions { gap: 0.7rem; }
 }
+
+/* ── SHARE POPUP ── */
+.share-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 14, 10, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.share-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.share-modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  max-width: 360px;
+  width: 100%;
+  transform: translateY(20px);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.share-overlay.open .share-modal {
+  transform: translateY(0);
+}
+.share-canvas-wrap {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+}
+.share-canvas-wrap img {
+  width: 100%;
+  display: block;
+}
+.share-modal-actions {
+  display: flex;
+  gap: 0.8rem;
+  width: 100%;
+}
+.btn-download {
+  flex: 1;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 0.85rem 1.5rem;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-align: center;
+}
+.btn-download:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(196,120,90,0.4);
+}
+.btn-close-modal {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 50px;
+  padding: 0.85rem 1.5rem;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-close-modal:hover {
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+}
+.share-hint {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  text-align: center;
+}
 </style>
 </head>
 <body>
@@ -539,11 +630,13 @@ function showToast(msg) {
 
 function shareCard() {
   if (!currentMessage) return;
+
   var W = 1080, H = 1920;
   var canvas = document.createElement("canvas");
   canvas.width = W; canvas.height = H;
   var ctx = canvas.getContext("2d");
 
+  // Background
   var bg = ctx.createLinearGradient(0, 0, W, H);
   bg.addColorStop(0, "#FDF6EE");
   bg.addColorStop(0.5, "#F8EDE0");
@@ -551,6 +644,7 @@ function shareCard() {
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
+  // Glow spots
   function glow(x, y, r, color) {
     var g = ctx.createRadialGradient(x, y, 0, x, y, r);
     g.addColorStop(0, color);
@@ -560,78 +654,156 @@ function shareCard() {
     ctx.arc(x, y, r, 0, Math.PI*2);
     ctx.fill();
   }
-  glow(W*0.1, H*0.08, 600, "rgba(196,120,90,0.1)");
-  glow(W*0.9, H*0.92, 700, "rgba(196,120,90,0.08)");
-  glow(W*0.5, H*0.5, 900, "rgba(245,230,210,0.3)");
+  glow(W*0.15, H*0.1, 700, "rgba(196,120,90,0.09)");
+  glow(W*0.85, H*0.9, 800, "rgba(196,120,90,0.07)");
+  glow(W*0.5, H*0.5, 1000, "rgba(245,230,210,0.25)");
 
-  ctx.font = "300 30px 'Instrument Sans', sans-serif";
-  ctx.fillStyle = "rgba(168,150,126,0.8)";
+  // Layout zones
+  var PAD = 120;
+  var TOP_ZONE = 260;    // header area height
+  var BOT_ZONE = 260;    // footer area height
+  var MID_TOP = TOP_ZONE;
+  var MID_BOT = H - BOT_ZONE;
+  var MID_H = MID_BOT - MID_TOP;
+
+  // ── HEADER ──
+  // Eyebrow text
+  ctx.font = "400 26px 'Instrument Sans', sans-serif";
+  ctx.fillStyle = "rgba(168,150,126,0.7)";
   ctx.textAlign = "center";
-  ctx.fillText("A MESSAGE FROM MOM", W/2, 130);
+  ctx.fillText("A MESSAGE FROM MOM", W/2, 110);
 
-  ctx.strokeStyle = "rgba(196,120,90,0.25)";
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(W/2 - 120, 160);
-  ctx.lineTo(W/2 + 120, 160);
-  ctx.stroke();
-
-  ctx.font = "italic 300 44px 'Cormorant Garamond', Georgia, serif";
-  ctx.fillStyle = "rgba(168,150,126,0.9)";
-  ctx.textAlign = "left";
-  ctx.fillText("My dear,", 130, 280);
-
-  var fontSize = Math.min(68, Math.max(44, Math.floor(4200 / Math.max(currentMessage.length, 1))));
-  ctx.font = "300 " + fontSize + "px 'Cormorant Garamond', Georgia, serif";
-  ctx.fillStyle = "#2C2318";
-  ctx.textAlign = "left";
-
-  var maxW = W - 260;
-  var lineH = fontSize * 1.55;
-  var words = currentMessage.split(" ");
-  var lines = [];
-  var line = "";
-  for (var i = 0; i < words.length; i++) {
-    var test = line ? line + " " + words[i] : words[i];
-    if (ctx.measureText(test).width > maxW) {
-      if (line) lines.push(line);
-      line = words[i];
-    } else {
-      line = test;
-    }
-  }
-  if (line) lines.push(line);
-
-  var totalH = lines.length * lineH;
-  var startY = (H - totalH) / 2 - 80;
-  for (var j = 0; j < lines.length; j++) {
-    ctx.fillText(lines[j], 130, startY + j * lineH);
-  }
-
-  var closeY = startY + lines.length * lineH + 80;
-  ctx.font = "italic 300 44px 'Cormorant Garamond', Georgia, serif";
-  ctx.fillStyle = "rgba(168,150,126,0.9)";
-  ctx.textAlign = "right";
-  ctx.fillText("With all my love, Mom", W - 130, closeY);
-
+  // Thin line
   ctx.strokeStyle = "rgba(196,120,90,0.2)";
   ctx.lineWidth = 1;
   ctx.beginPath();
-  ctx.moveTo(W/2 - 100, H - 180);
-  ctx.lineTo(W/2 + 100, H - 180);
+  ctx.moveTo(W/2 - 100, 136);
+  ctx.lineTo(W/2 + 100, 136);
   ctx.stroke();
 
-  ctx.font = "300 34px 'Instrument Sans', sans-serif";
-  ctx.fillStyle = "rgba(196,120,90,0.7)";
-  ctx.textAlign = "center";
-  ctx.fillText("tellme.mom", W/2, H - 130);
+  // Salutation
+  ctx.font = "italic 300 40px Georgia, serif";
+  ctx.fillStyle = "rgba(168,150,126,0.85)";
+  ctx.textAlign = "left";
+  ctx.fillText("My dear,", PAD, 210);
 
-  var link = document.createElement("a");
-  link.download = "tellmemom-" + Date.now() + ".png";
-  link.href = canvas.toDataURL("image/png");
-  link.click();
-  showToast("Card saved ✦");
+  // Thin separator below salutation
+  ctx.strokeStyle = "rgba(196,120,90,0.12)";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(PAD, 232);
+  ctx.lineTo(W - PAD, 232);
+  ctx.stroke();
+
+  // ── BODY TEXT — fitted into middle zone ──
+  var maxW = W - PAD * 2;
+
+  // Pick font size that fits the text
+  var fontSize = 72;
+  var lineH, lines;
+
+  function wrapText(size) {
+    var lh = size * 1.52;
+    var wrds = currentMessage.split(" ");
+    var ls = [];
+    var ln = "";
+    ctx.font = "300 " + size + "px Georgia, serif";
+    for (var i = 0; i < wrds.length; i++) {
+      var test = ln ? ln + " " + wrds[i] : wrds[i];
+      if (ctx.measureText(test).width > maxW) {
+        if (ln) ls.push(ln);
+        ln = wrds[i];
+      } else {
+        ln = test;
+      }
+    }
+    if (ln) ls.push(ln);
+    return { lines: ls, lineH: lh };
+  }
+
+  // Shrink font until text fits in middle zone
+  for (var fs = 72; fs >= 40; fs -= 2) {
+    var result = wrapText(fs);
+    var totalH = result.lines.length * result.lineH;
+    if (totalH <= MID_H - 80) {
+      fontSize = fs;
+      lineH = result.lineH;
+      lines = result.lines;
+      break;
+    }
+  }
+  if (!lines) {
+    var r2 = wrapText(40);
+    fontSize = 40; lineH = r2.lineH; lines = r2.lines;
+  }
+
+  // Center text vertically in middle zone
+  var totalTextH = lines.length * lineH;
+  var startY = MID_TOP + (MID_H - totalTextH) / 2 + fontSize * 0.8;
+
+  ctx.font = "300 " + fontSize + "px Georgia, serif";
+  ctx.fillStyle = "#2C2318";
+  ctx.textAlign = "left";
+  for (var j = 0; j < lines.length; j++) {
+    ctx.fillText(lines[j], PAD, startY + j * lineH);
+  }
+
+  // ── FOOTER ──
+  var footerY = MID_BOT + 60;
+
+  // Thin line above footer
+  ctx.strokeStyle = "rgba(196,120,90,0.15)";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(PAD, MID_BOT + 20);
+  ctx.lineTo(W - PAD, MID_BOT + 20);
+  ctx.stroke();
+
+  // Closing
+  ctx.font = "italic 300 40px Georgia, serif";
+  ctx.fillStyle = "rgba(168,150,126,0.85)";
+  ctx.textAlign = "right";
+  ctx.fillText("With all my love, Mom", W - PAD, footerY);
+
+  // Domain
+  ctx.font = "300 32px 'Instrument Sans', sans-serif";
+  ctx.fillStyle = "rgba(196,120,90,0.65)";
+  ctx.textAlign = "center";
+  ctx.fillText("tellme.mom", W/2, H - 100);
+
+  // Show in popup
+  var dataUrl = canvas.toDataURL("image/png");
+  document.getElementById("sharePreview").src = dataUrl;
+  document.getElementById("downloadBtn").onclick = function() {
+    var link = document.createElement("a");
+    link.download = "tellmemom-" + Date.now() + ".png";
+    link.href = dataUrl;
+    link.click();
+  };
+  document.getElementById("shareOverlay").classList.add("open");
 }
+
+document.getElementById("closeModalBtn").addEventListener("click", function() {
+  document.getElementById("shareOverlay").classList.remove("open");
+});
+document.getElementById("shareOverlay").addEventListener("click", function(e) {
+  if (e.target === this) this.classList.remove("open");
+});
 </script>
+
+<!-- SHARE POPUP -->
+<div class="share-overlay" id="shareOverlay">
+  <div class="share-modal" id="shareModal">
+    <div class="share-canvas-wrap">
+      <img id="sharePreview" src="" alt="Your message card">
+    </div>
+    <div class="share-modal-actions">
+      <button class="btn-download" id="downloadBtn">Save image</button>
+      <button class="btn-close-modal" id="closeModalBtn">Close</button>
+    </div>
+    <div class="share-hint">Screenshot or save to share on Instagram &amp; Stories</div>
+  </div>
+</div>
+
 </body>
 </html>
