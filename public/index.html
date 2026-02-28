@@ -16,6 +16,8 @@
 <meta name="twitter:image" content="https://tellme.mom/og-image.jpg">
 <link rel="icon" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Instrument+Sans:wght@300;400&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #FDF8F3;
@@ -26,11 +28,8 @@
   --accent2: #8B4F3A;
   --soft: #EDE0D0;
 }
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 html { height: 100%; }
-
 body {
   min-height: 100%;
   background: var(--bg);
@@ -38,21 +37,16 @@ body {
   font-family: 'Instrument Sans', sans-serif;
   overflow-x: hidden;
 }
-
-/* Soft warm gradient bg */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   background:
     radial-gradient(ellipse 80% 60% at 20% 10%, rgba(196,120,90,0.07) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 80% at 80% 90%, rgba(245,200,160,0.1) 0%, transparent 70%),
-    radial-gradient(ellipse 100% 50% at 50% 50%, rgba(253,248,243,0) 0%, transparent 100%);
+    radial-gradient(ellipse 60% 80% at 80% 90%, rgba(245,200,160,0.1) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
-
-/* Grain */
 body::after {
   content: '';
   position: fixed;
@@ -62,8 +56,6 @@ body::after {
   pointer-events: none;
   z-index: 0;
 }
-
-/* ── HEADER ── */
 header {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -73,7 +65,6 @@ header {
   justify-content: space-between;
   z-index: 10;
 }
-
 .logo {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.25rem;
@@ -82,15 +73,12 @@ header {
   color: var(--text);
 }
 .logo span { color: var(--accent); }
-
 .header-tag {
   font-size: 0.7rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
 }
-
-/* ── MAIN STAGE ── */
 .stage {
   position: relative;
   z-index: 1;
@@ -101,13 +89,10 @@ header {
   justify-content: center;
   padding: 7rem 2rem 5rem;
 }
-
-/* ── INTRO STATE ── */
 #introView {
   text-align: center;
   animation: fadeUp 0.9s ease-out both;
 }
-
 .eyebrow {
   font-size: 0.7rem;
   letter-spacing: 0.18em;
@@ -116,7 +101,6 @@ header {
   margin-bottom: 2rem;
   animation: fadeUp 0.9s 0.1s ease-out both;
 }
-
 .headline {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(2.6rem, 6vw, 5rem);
@@ -128,12 +112,7 @@ header {
   margin: 0 auto 1.4rem;
   animation: fadeUp 0.9s 0.2s ease-out both;
 }
-
-.headline em {
-  font-style: italic;
-  color: var(--accent);
-}
-
+.headline em { font-style: italic; color: var(--accent); }
 .subline {
   font-size: 0.95rem;
   color: var(--muted);
@@ -143,8 +122,6 @@ header {
   margin: 0 auto 3.5rem;
   animation: fadeUp 0.9s 0.3s ease-out both;
 }
-
-/* ── NEED SELECTOR ── */
 .need-prompt {
   font-size: 0.78rem;
   letter-spacing: 0.1em;
@@ -153,7 +130,6 @@ header {
   margin-bottom: 1.2rem;
   animation: fadeUp 0.9s 0.4s ease-out both;
 }
-
 .needs-grid {
   display: flex;
   flex-wrap: wrap;
@@ -163,7 +139,6 @@ header {
   margin: 0 auto 3rem;
   animation: fadeUp 0.9s 0.5s ease-out both;
 }
-
 .need-chip {
   padding: 0.55rem 1.2rem;
   border-radius: 50px;
@@ -187,8 +162,6 @@ header {
   background: var(--accent);
   color: #fff;
 }
-
-/* ── CTA BUTTON ── */
 .btn-receive {
   display: inline-flex;
   align-items: center;
@@ -212,8 +185,6 @@ header {
   box-shadow: 0 12px 40px rgba(139,79,58,0.25);
 }
 .btn-receive svg { width: 16px; height: 16px; opacity: 0.7; }
-
-/* ── LOADING STATE ── */
 #loadingView {
   display: none;
   flex-direction: column;
@@ -222,7 +193,6 @@ header {
   text-align: center;
 }
 #loadingView.visible { display: flex; }
-
 .loading-text {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.3rem;
@@ -230,23 +200,15 @@ header {
   color: var(--muted);
   animation: breathe 2s ease-in-out infinite;
 }
-
-.heartbeat {
-  display: flex;
-  gap: 5px;
-  align-items: center;
-}
+.heartbeat { display: flex; gap: 5px; align-items: center; }
 .hb {
-  width: 5px;
-  height: 5px;
+  width: 5px; height: 5px;
   border-radius: 50%;
   background: var(--accent);
   animation: hbpulse 1.4s ease-in-out infinite;
 }
 .hb:nth-child(2) { animation-delay: 0.2s; width: 7px; height: 7px; }
 .hb:nth-child(3) { animation-delay: 0.4s; }
-
-/* ── MESSAGE STATE ── */
 #messageView {
   display: none;
   flex-direction: column;
@@ -259,22 +221,16 @@ header {
   display: flex;
   animation: fadeUp 0.8s ease-out both;
 }
-
-/* Letter card */
 .letter {
   background: #FFFCF8;
   border: 1px solid rgba(196,120,90,0.15);
   border-radius: 4px 4px 4px 28px;
   padding: 3rem 3.5rem;
   position: relative;
-  box-shadow:
-    0 2px 8px rgba(196,120,90,0.06),
-    0 20px 60px rgba(139,79,58,0.08);
+  box-shadow: 0 2px 8px rgba(196,120,90,0.06), 0 20px 60px rgba(139,79,58,0.08);
   margin-bottom: 2rem;
   width: 100%;
 }
-
-/* Corner fold effect */
 .letter::after {
   content: '';
   position: absolute;
@@ -283,7 +239,6 @@ header {
   background: linear-gradient(135deg, var(--soft) 50%, transparent 50%);
   border-radius: 0 4px 0 0;
 }
-
 .letter-salutation {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1rem;
@@ -293,7 +248,6 @@ header {
   display: block;
   text-align: left;
 }
-
 .letter-body {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(1.3rem, 2.5vw, 1.7rem);
@@ -302,7 +256,6 @@ header {
   color: var(--text);
   text-align: left;
 }
-
 .letter-closing {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1rem;
@@ -312,8 +265,6 @@ header {
   display: block;
   text-align: right;
 }
-
-/* Tag under letter */
 .need-tag {
   font-size: 0.7rem;
   letter-spacing: 0.1em;
@@ -321,18 +272,13 @@ header {
   color: var(--muted);
   margin-bottom: 2.5rem;
 }
-.need-tag span {
-  color: var(--accent);
-}
-
-/* Action row */
+.need-tag span { color: var(--accent); }
 .msg-actions {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
   justify-content: center;
 }
-
 .btn-again {
   background: var(--text);
   color: var(--bg);
@@ -349,7 +295,6 @@ header {
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(44,35,24,0.2);
 }
-
 .btn-ghost {
   background: none;
   color: var(--muted);
@@ -365,13 +310,8 @@ header {
   align-items: center;
   gap: 0.5rem;
 }
-.btn-ghost:hover {
-  border-color: var(--accent);
-  color: var(--text);
-}
+.btn-ghost:hover { border-color: var(--accent); color: var(--text); }
 .btn-ghost svg { width: 15px; height: 15px; }
-
-/* ── FOOTER ── */
 footer {
   position: fixed;
   bottom: 1.5rem;
@@ -385,8 +325,6 @@ footer {
   white-space: nowrap;
   z-index: 1;
 }
-
-/* ── TOAST ── */
 .toast {
   position: fixed;
   bottom: 3.5rem;
@@ -406,8 +344,6 @@ footer {
   font-family: 'Instrument Sans', sans-serif;
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-/* ── ANIMATIONS ── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(22px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -420,7 +356,6 @@ footer {
   0%, 100% { transform: scale(0.7); opacity: 0.3; }
   50% { transform: scale(1); opacity: 1; }
 }
-
 @media (max-width: 600px) {
   header { padding: 1.4rem 1.5rem; }
   .letter { padding: 2rem 1.8rem; }
@@ -438,7 +373,6 @@ footer {
 
 <div class="stage">
 
-  <!-- INTRO -->
   <div id="introView">
     <div class="eyebrow">For every child who needed to hear it</div>
     <h1 class="headline">
@@ -447,7 +381,6 @@ footer {
     <p class="subline">
       Some of us grew up without the words we needed most. They're here now. Whenever you're ready.
     </p>
-
     <div class="need-prompt">What do you need to hear today?</div>
     <div class="needs-grid" id="needsGrid">
       <div class="need-chip" data-need="pride">I'm proud of you</div>
@@ -457,8 +390,8 @@ footer {
       <div class="need-chip" data-need="strong">You can do hard things</div>
       <div class="need-chip" data-need="seen">I see you</div>
       <div class="need-chip" data-need="home">You always have a home</div>
+      <div class="need-chip" data-need="surprise">Whatever I need most</div>
     </div>
-
     <button class="btn-receive" id="receiveBtn">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="currentColor"/>
@@ -467,7 +400,6 @@ footer {
     </button>
   </div>
 
-  <!-- LOADING -->
   <div id="loadingView">
     <div class="loading-text">She's thinking of you…</div>
     <div class="heartbeat">
@@ -477,7 +409,6 @@ footer {
     </div>
   </div>
 
-  <!-- MESSAGE -->
   <div id="messageView">
     <div class="need-tag">A message about <span id="needLabel"></span></div>
     <div class="letter">
@@ -495,9 +426,7 @@ footer {
         </svg>
         Share
       </button>
-      <button class="btn-ghost" id="backBtn">
-        ← Choose another
-      </button>
+      <button class="btn-ghost" id="backBtn">← Choose another</button>
     </div>
   </div>
 
@@ -511,16 +440,16 @@ var currentNeed = null;
 var currentMessage = "";
 
 var needLabels = {
-  pride: "being proud of you",
-  love: "unconditional love",
-  enough: "being enough",
-  safe: "feeling safe",
-  strong: "your strength",
-  seen: "being seen",
-  home: "always having a home"
+  pride:    "being proud of you",
+  love:     "unconditional love",
+  enough:   "being enough",
+  safe:     "feeling safe",
+  strong:   "your strength",
+  seen:     "being seen",
+  home:     "always having a home",
+  surprise: "what you need most"
 };
 
-// Chip selection
 document.getElementById("needsGrid").addEventListener("click", function(e) {
   var chip = e.target.closest(".need-chip");
   if (!chip) return;
@@ -531,7 +460,6 @@ document.getElementById("needsGrid").addEventListener("click", function(e) {
 
 document.getElementById("receiveBtn").addEventListener("click", function() {
   if (!currentNeed) {
-    // Auto-select random if none chosen
     var chips = document.querySelectorAll(".need-chip");
     var rand = chips[Math.floor(Math.random() * chips.length)];
     rand.classList.add("selected");
@@ -559,9 +487,7 @@ document.getElementById("backBtn").addEventListener("click", function() {
   document.querySelectorAll(".need-chip").forEach(function(c) { c.classList.remove("selected"); });
 });
 
-document.getElementById("shareBtn").addEventListener("click", function() {
-  shareCard();
-});
+document.getElementById("shareBtn").addEventListener("click", shareCard);
 
 function showLoading() {
   document.getElementById("introView").style.display = "none";
@@ -582,10 +508,14 @@ function showMessage(msg, need) {
 }
 
 function generateMessage(need, cb) {
+  // _t added to bust any caching on Vercel — every request is unique
   fetch("/api/message", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ need: need })
+    headers: {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-cache"
+    },
+    body: JSON.stringify({ need: need, _t: Date.now() })
   })
   .then(function(r) { return r.json(); })
   .then(function(data) {
@@ -609,13 +539,11 @@ function showToast(msg) {
 
 function shareCard() {
   if (!currentMessage) return;
-
   var W = 1080, H = 1920;
   var canvas = document.createElement("canvas");
   canvas.width = W; canvas.height = H;
   var ctx = canvas.getContext("2d");
 
-  // Warm creamy background
   var bg = ctx.createLinearGradient(0, 0, W, H);
   bg.addColorStop(0, "#FDF6EE");
   bg.addColorStop(0.5, "#F8EDE0");
@@ -623,7 +551,6 @@ function shareCard() {
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
-  // Soft glow spots
   function glow(x, y, r, color) {
     var g = ctx.createRadialGradient(x, y, 0, x, y, r);
     g.addColorStop(0, color);
@@ -637,14 +564,11 @@ function shareCard() {
   glow(W*0.9, H*0.92, 700, "rgba(196,120,90,0.08)");
   glow(W*0.5, H*0.5, 900, "rgba(245,230,210,0.3)");
 
-  // Top label
   ctx.font = "300 30px 'Instrument Sans', sans-serif";
   ctx.fillStyle = "rgba(168,150,126,0.8)";
   ctx.textAlign = "center";
-  ctx.letterSpacing = "8px";
   ctx.fillText("A MESSAGE FROM MOM", W/2, 130);
 
-  // Thin line
   ctx.strokeStyle = "rgba(196,120,90,0.25)";
   ctx.lineWidth = 1;
   ctx.beginPath();
@@ -652,13 +576,11 @@ function shareCard() {
   ctx.lineTo(W/2 + 120, 160);
   ctx.stroke();
 
-  // Salutation
   ctx.font = "italic 300 44px 'Cormorant Garamond', Georgia, serif";
   ctx.fillStyle = "rgba(168,150,126,0.9)";
   ctx.textAlign = "left";
   ctx.fillText("My dear,", 130, 280);
 
-  // Message body — word wrap
   var fontSize = Math.min(68, Math.max(44, Math.floor(4200 / Math.max(currentMessage.length, 1))));
   ctx.font = "300 " + fontSize + "px 'Cormorant Garamond', Georgia, serif";
   ctx.fillStyle = "#2C2318";
@@ -682,19 +604,16 @@ function shareCard() {
 
   var totalH = lines.length * lineH;
   var startY = (H - totalH) / 2 - 80;
-
   for (var j = 0; j < lines.length; j++) {
     ctx.fillText(lines[j], 130, startY + j * lineH);
   }
 
-  // Closing
   var closeY = startY + lines.length * lineH + 80;
   ctx.font = "italic 300 44px 'Cormorant Garamond', Georgia, serif";
   ctx.fillStyle = "rgba(168,150,126,0.9)";
   ctx.textAlign = "right";
   ctx.fillText("With all my love, Mom", W - 130, closeY);
 
-  // Bottom rule
   ctx.strokeStyle = "rgba(196,120,90,0.2)";
   ctx.lineWidth = 1;
   ctx.beginPath();
@@ -702,7 +621,6 @@ function shareCard() {
   ctx.lineTo(W/2 + 100, H - 180);
   ctx.stroke();
 
-  // Domain
   ctx.font = "300 34px 'Instrument Sans', sans-serif";
   ctx.fillStyle = "rgba(196,120,90,0.7)";
   ctx.textAlign = "center";
