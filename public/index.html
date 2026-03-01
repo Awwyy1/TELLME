@@ -412,22 +412,21 @@ footer a:hover { opacity: 0.8; }
       50% { transform: scale(1); opacity: 1; }
     }
 
-   @media (max-width: 600px) {
+  @media (max-width: 600px) {
   header { padding: 1.4rem 1.5rem; }
   .letter { padding: 2rem 1.8rem; }
   .needs-grid { gap: 0.5rem; }
   .msg-actions { gap: 0.7rem; }
-  .stage { padding-top: 8rem; padding-bottom: 6rem; }
+  .stage { padding-top: 8rem; padding-bottom: 2rem; }
   footer {
     flex-direction: column;
     gap: 0.2rem;
-    bottom: 1rem;
     font-size: 0.6rem;
     letter-spacing: 0.05em;
+    margin-top: 1.5rem;
+    padding-bottom: 1.5rem;
   }
-  footer span:first-child {
-    white-space: nowrap;
-  }
+  footer span:first-child { white-space: nowrap; }
   .footer-dot { display: none; }
 }
 
