@@ -19,9 +19,7 @@
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Instrument+Sans:wght@300;400&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Instrument+Sans:wght@300;400&display=swap" rel="stylesheet">
   <script>
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>
@@ -37,17 +35,8 @@
       --soft: #EDE0D0;
     }
 
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      height: 100%;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { height: 100%; }
 
     body {
       min-height: 100%;
@@ -62,8 +51,8 @@
       position: fixed;
       inset: 0;
       background:
-        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(196, 120, 90, 0.07) 0%, transparent 70%),
-        radial-gradient(ellipse 60% 80% at 80% 90%, rgba(245, 200, 160, 0.1) 0%, transparent 70%);
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(196,120,90,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 80% at 80% 90%, rgba(245,200,160,0.1) 0%, transparent 70%);
       pointer-events: none;
       z-index: 0;
     }
@@ -80,9 +69,7 @@
 
     header {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       padding: 1.6rem 2.5rem;
       display: flex;
       align-items: center;
@@ -97,10 +84,7 @@
       letter-spacing: 0.01em;
       color: var(--text);
     }
-
-    .logo span {
-      color: var(--accent);
-    }
+    .logo span { color: var(--accent); }
 
     .header-tag {
       font-size: 0.7rem;
@@ -145,11 +129,7 @@
       margin: 0 auto 1.4rem;
       animation: fadeUp 0.9s 0.2s ease-out both;
     }
-
-    .headline em {
-      font-style: italic;
-      color: var(--accent);
-    }
+    .headline em { font-style: italic; color: var(--accent); }
 
     .subline {
       font-size: 0.95rem;
@@ -183,8 +163,8 @@
     .need-chip {
       padding: 0.55rem 1.2rem;
       border-radius: 50px;
-      border: 1px solid rgba(196, 120, 90, 0.25);
-      background: rgba(196, 120, 90, 0.04);
+      border: 1px solid rgba(196,120,90,0.25);
+      background: rgba(196,120,90,0.04);
       font-family: 'Cormorant Garamond', serif;
       font-size: 1rem;
       font-style: italic;
@@ -193,13 +173,11 @@
       transition: all 0.25s ease;
       user-select: none;
     }
-
     .need-chip:hover {
       border-color: var(--accent);
-      background: rgba(196, 120, 90, 0.1);
+      background: rgba(196,120,90,0.1);
       transform: translateY(-1px);
     }
-
     .need-chip.selected {
       border-color: var(--accent);
       background: var(--accent);
@@ -223,18 +201,12 @@
       transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
       animation: fadeUp 0.9s 0.6s ease-out both;
     }
-
     .btn-receive:hover {
       background: var(--accent2);
       transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(139, 79, 58, 0.25);
+      box-shadow: 0 12px 40px rgba(139,79,58,0.25);
     }
-
-    .btn-receive svg {
-      width: 16px;
-      height: 16px;
-      opacity: 0.7;
-    }
+    .btn-receive svg { width: 16px; height: 16px; opacity: 0.7; }
 
     #loadingView {
       display: none;
@@ -243,10 +215,7 @@
       gap: 2rem;
       text-align: center;
     }
-
-    #loadingView.visible {
-      display: flex;
-    }
+    #loadingView.visible { display: flex; }
 
     .loading-text {
       font-family: 'Cormorant Garamond', serif;
@@ -256,29 +225,15 @@
       animation: breathe 2s ease-in-out infinite;
     }
 
-    .heartbeat {
-      display: flex;
-      gap: 5px;
-      align-items: center;
-    }
-
+    .heartbeat { display: flex; gap: 5px; align-items: center; }
     .hb {
-      width: 5px;
-      height: 5px;
+      width: 5px; height: 5px;
       border-radius: 50%;
       background: var(--accent);
       animation: hbpulse 1.4s ease-in-out infinite;
     }
-
-    .hb:nth-child(2) {
-      animation-delay: 0.2s;
-      width: 7px;
-      height: 7px;
-    }
-
-    .hb:nth-child(3) {
-      animation-delay: 0.4s;
-    }
+    .hb:nth-child(2) { animation-delay: 0.2s; width: 7px; height: 7px; }
+    .hb:nth-child(3) { animation-delay: 0.4s; }
 
     #messageView {
       display: none;
@@ -288,7 +243,6 @@
       width: 100%;
       text-align: center;
     }
-
     #messageView.visible {
       display: flex;
       animation: fadeUp 0.8s ease-out both;
@@ -296,22 +250,19 @@
 
     .letter {
       background: #FFFCF8;
-      border: 1px solid rgba(196, 120, 90, 0.15);
+      border: 1px solid rgba(196,120,90,0.15);
       border-radius: 4px 4px 4px 28px;
       padding: 3rem 3.5rem;
       position: relative;
-      box-shadow: 0 2px 8px rgba(196, 120, 90, 0.06), 0 20px 60px rgba(139, 79, 58, 0.08);
+      box-shadow: 0 2px 8px rgba(196,120,90,0.06), 0 20px 60px rgba(139,79,58,0.08);
       margin-bottom: 2rem;
       width: 100%;
     }
-
     .letter::after {
       content: '';
       position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 28px;
-      height: 28px;
+      bottom: 0; left: 0;
+      width: 28px; height: 28px;
       background: linear-gradient(135deg, var(--soft) 50%, transparent 50%);
       border-radius: 0 4px 0 0;
     }
@@ -352,10 +303,7 @@
       color: var(--muted);
       margin-bottom: 2.5rem;
     }
-
-    .need-tag span {
-      color: var(--accent);
-    }
+    .need-tag span { color: var(--accent); }
 
     .msg-actions {
       display: flex;
@@ -376,16 +324,15 @@
       cursor: pointer;
       transition: transform 0.2s, box-shadow 0.2s;
     }
-
     .btn-again:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(44, 35, 24, 0.2);
+      box-shadow: 0 8px 30px rgba(44,35,24,0.2);
     }
 
     .btn-ghost {
       background: none;
       color: var(--muted);
-      border: 1px solid rgba(196, 120, 90, 0.25);
+      border: 1px solid rgba(196,120,90,0.25);
       border-radius: 50px;
       padding: 0.85rem 2rem;
       font-family: 'Instrument Sans', sans-serif;
@@ -397,17 +344,10 @@
       align-items: center;
       gap: 0.5rem;
     }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--text); }
+    .btn-ghost svg { width: 15px; height: 15px; }
 
-    .btn-ghost:hover {
-      border-color: var(--accent);
-      color: var(--text);
-    }
-
-    .btn-ghost svg {
-      width: 15px;
-      height: 15px;
-    }
-
+    /* ── FOOTER ── */
     footer {
       position: fixed;
       bottom: 1.5rem;
@@ -420,6 +360,24 @@
       opacity: 0.4;
       white-space: nowrap;
       z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    footer a:hover { opacity: 0.8; }
+    .footer-dot {
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      background: var(--muted);
+      opacity: 0.5;
+      display: inline-block;
     }
 
     .toast {
@@ -440,73 +398,33 @@
       pointer-events: none;
       font-family: 'Instrument Sans', sans-serif;
     }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(22px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
-
     @keyframes breathe {
-
-      0%,
-      100% {
-        opacity: 0.5;
-      }
-
-      50% {
-        opacity: 1;
-      }
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
     }
-
     @keyframes hbpulse {
-
-      0%,
-      100% {
-        transform: scale(0.7);
-        opacity: 0.3;
-      }
-
-      50% {
-        transform: scale(1);
-        opacity: 1;
-      }
+      0%, 100% { transform: scale(0.7); opacity: 0.3; }
+      50% { transform: scale(1); opacity: 1; }
     }
 
     @media (max-width: 600px) {
-      header {
-        padding: 1.4rem 1.5rem;
-      }
-
-      .letter {
-        padding: 2rem 1.8rem;
-      }
-
-      .needs-grid {
-        gap: 0.5rem;
-      }
-
-      .msg-actions {
-        gap: 0.7rem;
-      }
+      header { padding: 1.4rem 1.5rem; }
+      .letter { padding: 2rem 1.8rem; }
+      .needs-grid { gap: 0.5rem; }
+      .msg-actions { gap: 0.7rem; }
     }
 
     /* ── SHARE POPUP ── */
     .share-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(20, 14, 10, 0.75);
+      background: rgba(20,14,10,0.75);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       z-index: 300;
@@ -518,12 +436,10 @@
       pointer-events: none;
       transition: opacity 0.35s ease;
     }
-
     .share-overlay.open {
       opacity: 1;
       pointer-events: all;
     }
-
     .share-modal {
       position: relative;
       display: flex;
@@ -535,29 +451,19 @@
       transform: translateY(20px);
       transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     }
-
-    .share-overlay.open .share-modal {
-      transform: translateY(0);
-    }
-
+    .share-overlay.open .share-modal { transform: translateY(0); }
     .share-canvas-wrap {
       width: 100%;
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.5);
     }
-
-    .share-canvas-wrap img {
-      width: 100%;
-      display: block;
-    }
-
+    .share-canvas-wrap img { width: 100%; display: block; }
     .share-modal-actions {
       display: flex;
       gap: 0.8rem;
       width: 100%;
     }
-
     .btn-download {
       flex: 1;
       background: var(--accent);
@@ -572,16 +478,14 @@
       transition: transform 0.2s, box-shadow 0.2s;
       text-align: center;
     }
-
     .btn-download:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(196, 120, 90, 0.4);
+      box-shadow: 0 8px 24px rgba(196,120,90,0.4);
     }
-
     .btn-close-modal {
-      background: rgba(255, 255, 255, 0.1);
-      color: rgba(255, 255, 255, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,255,255,0.15);
       border-radius: 50px;
       padding: 0.85rem 1.5rem;
       font-family: 'Instrument Sans', sans-serif;
@@ -590,18 +494,98 @@
       cursor: pointer;
       transition: all 0.2s;
     }
-
     .btn-close-modal:hover {
-      background: rgba(255, 255, 255, 0.18);
+      background: rgba(255,255,255,0.18);
       color: #fff;
     }
-
     .share-hint {
       font-size: 0.7rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.35);
+      color: rgba(255,255,255,0.35);
       text-align: center;
+    }
+
+    /* ── LEGAL POPUP ── */
+    .legal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(20,14,10,0.6);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 400;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .legal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .legal-modal {
+      background: var(--bg);
+      border-radius: 16px;
+      padding: 3rem 3rem 2.5rem;
+      max-width: 540px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      transform: translateY(16px);
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      box-shadow: 0 40px 100px rgba(0,0,0,0.3);
+    }
+    .legal-overlay.open .legal-modal { transform: translateY(0); }
+
+    .legal-modal h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.01em;
+    }
+    .legal-modal h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--text);
+      margin: 2rem 0 0.6rem;
+      letter-spacing: 0.02em;
+    }
+    .legal-modal p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.75;
+      font-weight: 300;
+    }
+    .legal-divider {
+      width: 40px;
+      height: 1px;
+      background: rgba(196,120,90,0.3);
+      margin: 1.2rem 0 1.6rem;
+    }
+    .legal-close {
+      position: absolute;
+      top: 1.4rem;
+      right: 1.6rem;
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 0.3rem 0.5rem;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .legal-close:hover { color: var(--text); }
+
+    @media (max-width: 600px) {
+      .legal-modal { padding: 2.5rem 1.8rem 2rem; }
     }
   </style>
 </head>
@@ -636,9 +620,7 @@
       </div>
       <button class="btn-receive" id="receiveBtn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path
-            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-            fill="currentColor" />
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="currentColor"/>
         </svg>
         Receive these words
       </button>
@@ -664,11 +646,11 @@
         <button class="btn-again" id="againBtn">Hear it again, differently</button>
         <button class="btn-ghost" id="shareBtn">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <circle cx="18" cy="5" r="3" />
-            <circle cx="6" cy="12" r="3" />
-            <circle cx="18" cy="19" r="3" />
-            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+            <circle cx="18" cy="5" r="3"/>
+            <circle cx="6" cy="12" r="3"/>
+            <circle cx="18" cy="19" r="3"/>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
           </svg>
           Share
         </button>
@@ -678,7 +660,11 @@
 
   </div>
 
-  <footer>tellme.mom — for those who needed to hear it</footer>
+  <footer>
+    <span>tellme.mom — for those who needed to hear it</span>
+    <span class="footer-dot"></span>
+    <a id="legalLink">Terms &amp; Privacy</a>
+  </footer>
   <div class="toast" id="toast"></div>
 
   <!-- SHARE POPUP -->
@@ -695,30 +681,52 @@
     </div>
   </div>
 
+  <!-- LEGAL POPUP -->
+  <div class="legal-overlay" id="legalOverlay">
+    <div class="legal-modal">
+      <button class="legal-close" id="legalClose">&times;</button>
+
+      <h2>Terms of Use</h2>
+      <div class="legal-divider"></div>
+      <p>tellme.mom is a free emotional wellness tool designed to offer words of comfort, love, and affirmation. By using this site, you agree to the following.</p>
+
+      <h3>Not a substitute for therapy</h3>
+      <p>This site is not therapy. The messages generated here are created by an AI and are not a substitute for professional mental health support. If you are experiencing a crisis, depression, grief, or any form of emotional distress that feels overwhelming, please reach out to a qualified mental health professional or a crisis helpline in your country.</p>
+
+      <h3>No claims</h3>
+      <p>The words on this site are meant to offer comfort — not diagnosis, not advice, not treatment. We make no claims about therapeutic outcomes. You use this site at your own discretion. We are not responsible for how the content affects you emotionally. If at any point the experience feels difficult, please step away and take care of yourself first.</p>
+
+      <h3>Privacy</h3>
+      <p>We do not collect personal data. We do not require registration. We do not store your name, email, location, or any identifying information.</p>
+      <p style="margin-top:0.8rem">When you request a message, your selected theme is sent to Anthropic's API — the AI that generates the response. This transmission is subject to Anthropic's own privacy policy at anthropic.com. We do not log, save, or have access to what was generated for you.</p>
+      <p style="margin-top:0.8rem">No cookies are used for tracking. No analytics tools monitor your behavior on this site. This site exists to be a safe place — and that includes how we handle your data. Which is to say: we don't.</p>
+    </div>
+  </div>
+
   <script>
     var currentNeed = null;
     var currentMessage = "";
 
     var needLabels = {
-      pride: "being proud of you",
-      love: "unconditional love",
-      enough: "being enough",
-      safe: "feeling safe",
-      strong: "your strength",
-      seen: "being seen",
-      home: "always having a home",
+      pride:    "being proud of you",
+      love:     "unconditional love",
+      enough:   "being enough",
+      safe:     "feeling safe",
+      strong:   "your strength",
+      seen:     "being seen",
+      home:     "always having a home",
       surprise: "what you need most"
     };
 
-    document.getElementById("needsGrid").addEventListener("click", function (e) {
+    document.getElementById("needsGrid").addEventListener("click", function(e) {
       var chip = e.target.closest(".need-chip");
       if (!chip) return;
-      document.querySelectorAll(".need-chip").forEach(function (c) { c.classList.remove("selected"); });
+      document.querySelectorAll(".need-chip").forEach(function(c) { c.classList.remove("selected"); });
       chip.classList.add("selected");
       currentNeed = chip.getAttribute("data-need");
     });
 
-    document.getElementById("receiveBtn").addEventListener("click", function () {
+    document.getElementById("receiveBtn").addEventListener("click", function() {
       if (!currentNeed) {
         var chips = document.querySelectorAll(".need-chip");
         var rand = chips[Math.floor(Math.random() * chips.length)];
@@ -726,28 +734,39 @@
         currentNeed = rand.getAttribute("data-need");
       }
       showLoading();
-      generateMessage(currentNeed, function (msg) {
+      generateMessage(currentNeed, function(msg) {
         showMessage(msg, currentNeed);
       });
     });
 
-    document.getElementById("againBtn").addEventListener("click", function () {
+    document.getElementById("againBtn").addEventListener("click", function() {
       showLoading();
-      generateMessage(currentNeed, function (msg) {
+      generateMessage(currentNeed, function(msg) {
         showMessage(msg, currentNeed);
       });
     });
 
-    document.getElementById("backBtn").addEventListener("click", function () {
+    document.getElementById("backBtn").addEventListener("click", function() {
       document.getElementById("messageView").classList.remove("visible");
       document.getElementById("messageView").style.display = "none";
       document.getElementById("introView").style.display = "";
       document.getElementById("introView").style.animation = "fadeUp 0.6s ease-out both";
       currentNeed = null;
-      document.querySelectorAll(".need-chip").forEach(function (c) { c.classList.remove("selected"); });
+      document.querySelectorAll(".need-chip").forEach(function(c) { c.classList.remove("selected"); });
     });
 
     document.getElementById("shareBtn").addEventListener("click", shareCard);
+
+    // Legal popup
+    document.getElementById("legalLink").addEventListener("click", function() {
+      document.getElementById("legalOverlay").classList.add("open");
+    });
+    document.getElementById("legalClose").addEventListener("click", function() {
+      document.getElementById("legalOverlay").classList.remove("open");
+    });
+    document.getElementById("legalOverlay").addEventListener("click", function(e) {
+      if (e.target === this) this.classList.remove("open");
+    });
 
     function showLoading() {
       document.getElementById("introView").style.display = "none";
@@ -768,7 +787,6 @@
     }
 
     function generateMessage(need, cb) {
-      // _t added to bust any caching on Vercel — every request is unique
       fetch("/api/message", {
         method: "POST",
         headers: {
@@ -777,24 +795,24 @@
         },
         body: JSON.stringify({ need: need, _t: Date.now() })
       })
-        .then(function (r) { return r.json(); })
-        .then(function (data) {
-          if (data.message) {
-            cb(data.message);
-          } else {
-            cb("You are so deeply loved. More than words can hold. I should have said this every single day.");
-          }
-        })
-        .catch(function () {
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.message) {
+          cb(data.message);
+        } else {
           cb("You are so deeply loved. More than words can hold. I should have said this every single day.");
-        });
+        }
+      })
+      .catch(function() {
+        cb("You are so deeply loved. More than words can hold. I should have said this every single day.");
+      });
     }
 
     function showToast(msg) {
       var t = document.getElementById("toast");
       t.textContent = msg;
       t.classList.add("show");
-      setTimeout(function () { t.classList.remove("show"); }, 2400);
+      setTimeout(function() { t.classList.remove("show"); }, 2400);
     }
 
     function shareCard() {
@@ -805,7 +823,6 @@
       canvas.width = W; canvas.height = H;
       var ctx = canvas.getContext("2d");
 
-      // Background
       var bg = ctx.createLinearGradient(0, 0, W, H);
       bg.addColorStop(0, "#FDF6EE");
       bg.addColorStop(0.5, "#F8EDE0");
@@ -813,50 +830,43 @@
       ctx.fillStyle = bg;
       ctx.fillRect(0, 0, W, H);
 
-      // Glow spots
       function glow(x, y, r, color) {
         var g = ctx.createRadialGradient(x, y, 0, x, y, r);
         g.addColorStop(0, color);
         g.addColorStop(1, "transparent");
         ctx.fillStyle = g;
         ctx.beginPath();
-        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.arc(x, y, r, 0, Math.PI*2);
         ctx.fill();
       }
-      glow(W * 0.15, H * 0.1, 700, "rgba(196,120,90,0.09)");
-      glow(W * 0.85, H * 0.9, 800, "rgba(196,120,90,0.07)");
-      glow(W * 0.5, H * 0.5, 1000, "rgba(245,230,210,0.25)");
+      glow(W*0.15, H*0.1, 700, "rgba(196,120,90,0.09)");
+      glow(W*0.85, H*0.9, 800, "rgba(196,120,90,0.07)");
+      glow(W*0.5, H*0.5, 1000, "rgba(245,230,210,0.25)");
 
-      // Layout zones
       var PAD = 120;
-      var TOP_ZONE = 260;    // header area height
-      var BOT_ZONE = 260;    // footer area height
+      var TOP_ZONE = 260;
+      var BOT_ZONE = 260;
       var MID_TOP = TOP_ZONE;
       var MID_BOT = H - BOT_ZONE;
       var MID_H = MID_BOT - MID_TOP;
 
-      // ── HEADER ──
-      // Eyebrow text
       ctx.font = "400 26px 'Instrument Sans', sans-serif";
       ctx.fillStyle = "rgba(168,150,126,0.7)";
       ctx.textAlign = "center";
-      ctx.fillText("A MESSAGE FROM MOM", W / 2, 110);
+      ctx.fillText("A MESSAGE FROM MOM", W/2, 110);
 
-      // Thin line
       ctx.strokeStyle = "rgba(196,120,90,0.2)";
       ctx.lineWidth = 1;
       ctx.beginPath();
-      ctx.moveTo(W / 2 - 100, 136);
-      ctx.lineTo(W / 2 + 100, 136);
+      ctx.moveTo(W/2 - 100, 136);
+      ctx.lineTo(W/2 + 100, 136);
       ctx.stroke();
 
-      // Salutation
       ctx.font = "italic 300 40px Georgia, serif";
       ctx.fillStyle = "rgba(168,150,126,0.85)";
       ctx.textAlign = "left";
       ctx.fillText("My dear,", PAD, 210);
 
-      // Thin separator below salutation
       ctx.strokeStyle = "rgba(196,120,90,0.12)";
       ctx.lineWidth = 1;
       ctx.beginPath();
@@ -864,10 +874,7 @@
       ctx.lineTo(W - PAD, 232);
       ctx.stroke();
 
-      // ── BODY TEXT — fitted into middle zone ──
       var maxW = W - PAD * 2;
-
-      // Pick font size that fits the text
       var fontSize = 72;
       var lineH, lines;
 
@@ -890,7 +897,6 @@
         return { lines: ls, lineH: lh };
       }
 
-      // Shrink font until text fits in middle zone
       for (var fs = 72; fs >= 40; fs -= 2) {
         var result = wrapText(fs);
         var totalH = result.lines.length * result.lineH;
@@ -906,7 +912,6 @@
         fontSize = 40; lineH = r2.lineH; lines = r2.lines;
       }
 
-      // Center text vertically in middle zone
       var totalTextH = lines.length * lineH;
       var startY = MID_TOP + (MID_H - totalTextH) / 2 + fontSize * 0.8;
 
@@ -917,10 +922,7 @@
         ctx.fillText(lines[j], PAD, startY + j * lineH);
       }
 
-      // ── FOOTER ──
       var footerY = MID_BOT + 60;
-
-      // Thin line above footer
       ctx.strokeStyle = "rgba(196,120,90,0.15)";
       ctx.lineWidth = 1;
       ctx.beginPath();
@@ -928,38 +930,34 @@
       ctx.lineTo(W - PAD, MID_BOT + 20);
       ctx.stroke();
 
-      // Closing
       ctx.font = "italic 300 40px Georgia, serif";
       ctx.fillStyle = "rgba(168,150,126,0.85)";
       ctx.textAlign = "right";
       ctx.fillText("With all my love, Mom", W - PAD, footerY);
 
-      // Domain
       ctx.font = "300 32px 'Instrument Sans', sans-serif";
       ctx.fillStyle = "rgba(196,120,90,0.65)";
       ctx.textAlign = "center";
-      ctx.fillText("tellme.mom", W / 2, H - 100);
+      ctx.fillText("tellme.mom", W/2, H - 100);
 
-      // Show in popup
       var dataUrl = canvas.toDataURL("image/png");
       document.getElementById("sharePreview").src = dataUrl;
-      document.getElementById("downloadBtn").onclick = function () {
+      document.getElementById("downloadBtn").onclick = function() {
         var link = document.createElement("a");
-        link.download = "tellmemom-" + Date.now() + ".png";
+        link.download = "frommom.png";
         link.href = dataUrl;
         link.click();
       };
       document.getElementById("shareOverlay").classList.add("open");
     }
 
-    document.getElementById("closeModalBtn").addEventListener("click", function () {
+    document.getElementById("closeModalBtn").addEventListener("click", function() {
       document.getElementById("shareOverlay").classList.remove("open");
     });
-    document.getElementById("shareOverlay").addEventListener("click", function (e) {
+    document.getElementById("shareOverlay").addEventListener("click", function(e) {
       if (e.target === this) this.classList.remove("open");
     });
   </script>
 
 </body>
-
 </html>
