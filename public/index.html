@@ -349,21 +349,23 @@
 
     /* ── FOOTER ── */
     footer {
-      position: fixed;
-      bottom: 1.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      opacity: 0.4;
-      white-space: nowrap;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-    }
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0.4;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  max-width: 90vw;
+  flex-wrap: wrap;
+  justify-content: center;
+}
     footer a {
       color: var(--muted);
       text-decoration: none;
