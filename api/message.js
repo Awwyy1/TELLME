@@ -9,7 +9,7 @@ function getClientIp(req) {
   return req.headers['x-real-ip'] || req.socket?.remoteAddress || 'unknown';
 }
 
-function isRateLimited(ip) {
+function getRateLimitInfo(ip) {
   const now = Date.now();
 
   // Lazy cleanup: if map gets large, purge expired entries
@@ -23,11 +23,18 @@ function isRateLimited(ip) {
 
   if (!record || now - record.start > WINDOW_MS) {
     rateLimit.set(ip, { count: 1, start: now });
-    return false;
+    return { limited: false, remaining: MAX_REQUESTS - 1, retryAfter: 0 };
   }
 
   record.count++;
-  return record.count > MAX_REQUESTS;
+  const remaining = Math.max(0, MAX_REQUESTS - record.count);
+  const retryAfter = Math.ceil((WINDOW_MS - (now - record.start)) / 1000);
+
+  return {
+    limited: record.count > MAX_REQUESTS,
+    remaining,
+    retryAfter
+  };
 }
 
 const ALLOWED_ORIGINS = [
@@ -65,8 +72,15 @@ export default async function handler(req, res) {
 
   // Rate limit check
   const clientIp = getClientIp(req);
-  if (isRateLimited(clientIp)) {
-    return res.status(429).json({ error: "Too many requests. Please wait a moment." });
+  const rl = getRateLimitInfo(clientIp);
+  res.setHeader('X-RateLimit-Limit', MAX_REQUESTS);
+  res.setHeader('X-RateLimit-Remaining', rl.remaining);
+  if (rl.limited) {
+    res.setHeader('Retry-After', rl.retryAfter);
+    return res.status(429).json({
+      error: "Too many requests. Please wait a moment.",
+      retryAfter: rl.retryAfter
+    });
   }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;

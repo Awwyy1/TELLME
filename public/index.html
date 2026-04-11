@@ -412,6 +412,16 @@ footer a:hover { opacity: 0.8; }
       50% { transform: scale(1); opacity: 1; }
     }
 
+  /* ── TABLET ── */
+  @media (min-width: 601px) and (max-width: 1024px) {
+    .stage { padding: 7rem 3rem 4rem; }
+    .headline { font-size: clamp(2.2rem, 5vw, 3.6rem); max-width: 560px; }
+    .subline { max-width: 420px; }
+    .letter { padding: 2.5rem 2.8rem; max-width: 580px; }
+    .needs-grid { max-width: 460px; }
+  }
+
+  /* ── MOBILE ── */
   @media (max-width: 600px) {
   header { padding: 1.4rem 1.5rem; }
   .letter { padding: 2rem 1.8rem; }
@@ -706,6 +716,9 @@ footer a:hover { opacity: 0.8; }
       <h3>No claims</h3>
       <p>The words on this site are meant to offer comfort — not diagnosis, not advice, not treatment. We make no claims about therapeutic outcomes. You use this site at your own discretion. We are not responsible for how the content affects you emotionally. If at any point the experience feels difficult, please step away and take care of yourself first.</p>
 
+      <h3>For younger visitors</h3>
+      <p>If you are under 18, we gently recommend using this site together with a trusted adult — a relative, a teacher, a counselor, or anyone you feel safe with. This site generates emotionally sensitive content, and having someone beside you can make the experience feel safer.</p>
+
       <h3>Privacy</h3>
       <p>We do not collect personal data. We do not require registration. We do not store your name, email, location, or any identifying information.</p>
       <p style="margin-top:0.8rem">When you request a message, your selected theme is sent to Anthropic's API — the AI that generates the response. This transmission is subject to Anthropic's own privacy policy at anthropic.com. We do not log, save, or have access to what was generated for you.</p>
@@ -821,9 +834,12 @@ footer a:hover { opacity: 0.8; }
       })
       .then(function(r) {
         if (r.status === 429) {
-          showToast("Take a breath… try again in a minute");
-          showIntro();
-          return null;
+          return r.json().then(function(d) {
+            var sec = d.retryAfter || 60;
+            showToast("Take a breath\u2026 try again in " + sec + "s");
+            showIntro();
+            return null;
+          });
         }
         return r.json();
       })
