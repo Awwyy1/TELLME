@@ -30,12 +30,37 @@ function isRateLimited(ip) {
   return record.count > MAX_REQUESTS;
 }
 
+const ALLOWED_ORIGINS = [
+  'https://tellme.mom',
+  'https://www.tellme.mom'
+];
+
+const ALLOWED_NEEDS = ['pride', 'love', 'enough', 'safe', 'strong', 'seen', 'home', 'surprise'];
+
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
   res.setHeader('Pragma', 'no-cache');
 
+  // --- CORS ---
+  const origin = req.headers.origin;
+  if (ALLOWED_ORIGINS.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'POST');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(204).end();
+  }
+
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
+  }
+
+  // --- Content-Type check ---
+  const contentType = req.headers['content-type'] || '';
+  if (!contentType.includes('application/json')) {
+    return res.status(400).json({ error: "Content-Type must be application/json" });
   }
 
   // Rate limit check
@@ -51,6 +76,10 @@ export default async function handler(req, res) {
 
   const { need } = req.body;
 
+  if (!ALLOWED_NEEDS.includes(need)) {
+    return res.status(400).json({ error: "Invalid need parameter" });
+  }
+
   const needContexts = {
     pride:    "The person needs to hear that their mother is proud of them — not for achievements or success, but for who they are as a person. Write from a different angle each time: their perseverance, their kindness, their quiet strength, the small daily things they do, the way they've grown.",
     love:     "The person needs to hear that they are loved unconditionally. Each time approach it differently: love that doesn't require performance, love that was there before they did anything to earn it, love that remains in failure and mess, love that is simply about their existence.",
@@ -62,7 +91,7 @@ export default async function handler(req, res) {
     surprise: "Write whatever this person needs to hear most right now — you choose. It could be about love, strength, belonging, being seen, or something else entirely. Trust your instincts as a mother. Make it feel like you know exactly what they needed without them having to ask."
   };
 
-  const context = needContexts[need] || needContexts.surprise;
+  const context = needContexts[need];
 
   const angles = [
     "Begin with an observation about their daily life.",
