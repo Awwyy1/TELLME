@@ -1,9 +1,47 @@
+// --- Rate Limiting ---
+const rateLimit = new Map();
+const WINDOW_MS = 60 * 1000; // 1 minute
+const MAX_REQUESTS = 5;      // 5 requests per window
+
+function getClientIp(req) {
+  const forwarded = req.headers['x-forwarded-for'];
+  if (forwarded) return forwarded.split(',')[0].trim();
+  return req.headers['x-real-ip'] || req.socket?.remoteAddress || 'unknown';
+}
+
+function isRateLimited(ip) {
+  const now = Date.now();
+
+  // Lazy cleanup: if map gets large, purge expired entries
+  if (rateLimit.size > 5000) {
+    for (const [key, val] of rateLimit) {
+      if (now - val.start > WINDOW_MS) rateLimit.delete(key);
+    }
+  }
+
+  const record = rateLimit.get(ip);
+
+  if (!record || now - record.start > WINDOW_MS) {
+    rateLimit.set(ip, { count: 1, start: now });
+    return false;
+  }
+
+  record.count++;
+  return record.count > MAX_REQUESTS;
+}
+
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
   res.setHeader('Pragma', 'no-cache');
 
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
+  }
+
+  // Rate limit check
+  const clientIp = getClientIp(req);
+  if (isRateLimited(clientIp)) {
+    return res.status(429).json({ error: "Too many requests. Please wait a moment." });
   }
 
   const apiKey = process.env.ANTHROPIC_API_KEY;

@@ -791,6 +791,14 @@ footer a:hover { opacity: 0.8; }
       document.getElementById("loadingView").classList.add("visible");
     }
 
+    function showIntro() {
+      document.getElementById("loadingView").classList.remove("visible");
+      document.getElementById("messageView").classList.remove("visible");
+      document.getElementById("messageView").style.display = "none";
+      document.getElementById("introView").style.display = "";
+      document.getElementById("introView").style.animation = "fadeUp 0.6s ease-out both";
+    }
+
     function showMessage(msg, need) {
       currentMessage = msg;
       document.getElementById("loadingView").classList.remove("visible");
@@ -811,8 +819,16 @@ footer a:hover { opacity: 0.8; }
         },
         body: JSON.stringify({ need: need, _t: Date.now() })
       })
-      .then(function(r) { return r.json(); })
+      .then(function(r) {
+        if (r.status === 429) {
+          showToast("Take a breath… try again in a minute");
+          showIntro();
+          return null;
+        }
+        return r.json();
+      })
       .then(function(data) {
+        if (!data) return;
         if (data.message) {
           cb(data.message);
         } else {
