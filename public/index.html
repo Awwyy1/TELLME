@@ -783,6 +783,8 @@ footer a:hover, .link-btn:hover { color: var(--text); }
   <footer>
     <span>tellme.mom — for those who needed to hear it</span>
     <span class="footer-dot" aria-hidden="true"></span>
+    <a href="/letters">Read letters</a>
+    <span class="footer-dot" aria-hidden="true"></span>
     <a class="footer-help" href="https://findahelpline.com" target="_blank" rel="noopener">Having a hard time? Find a helpline</a>
     <span class="footer-dot" aria-hidden="true"></span>
     <button type="button" class="link-btn" id="legalLink">Terms &amp; Privacy</button>
@@ -1320,6 +1322,24 @@ footer a:hover, .link-btn:hover { color: var(--text); }
     }
 
     $("shareBtn").addEventListener("click", shareCard);
+
+    // ── Deep links from the letter pages ──────────────────
+    // /?need=pride preselects a theme (never auto-generates, so crawlers cost nothing).
+    // /#terms opens Terms & Privacy.
+    (function () {
+      var params = new URLSearchParams(location.search);
+      var need = params.get("need");
+      var chip = need && chips.filter(function (c) { return c.getAttribute("data-need") === need; })[0];
+      if (chip) {
+        selectChip(chip);
+        history.replaceState(null, "", location.pathname + location.hash);
+        setTimeout(function () { $("receiveBtn").focus({ preventScroll: true }); }, 50);
+      }
+      if (location.hash === "#terms") openDialog($("legalOverlay"));
+      window.addEventListener("hashchange", function () {
+        if (location.hash === "#terms") openDialog($("legalOverlay"));
+      });
+    })();
 
     $("nativeShareBtn").addEventListener("click", function () {
       if (!share.file) return;

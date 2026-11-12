@@ -7,6 +7,7 @@
   "routes": [
     { "src": "/api/message", "dest": "/api/message.js" },
     { "src": "/api/config", "dest": "/api/config.js" },
+    { "src": "/(letters|im-proud-of-you|i-love-you|you-are-enough|you-are-safe|you-can-do-hard-things|i-see-you|you-always-have-a-home)/?", "dest": "/public/$1.html" },
     { "src": "/(.*)", "dest": "/public/$1" }
   ],
   "headers": [
