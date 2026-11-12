@@ -40,6 +40,8 @@ function head({ title, description, url, jsonLd }) {
   <link rel="stylesheet" href="/pages.css">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script src="/site.js"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>`;
 }
@@ -47,7 +49,13 @@ function head({ title, description, url, jsonLd }) {
 const header = `
   <header class="site-header">
     <a class="logo" href="/">tellme<span>.mom</span></a>
-    <a class="header-link" href="/letters">All letters</a>
+    <div class="header-right">
+      <a class="header-link" href="/letters">All letters</a>
+      <button type="button" class="theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Switch to night mode" title="Night mode">
+        <svg class="sun" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="moon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
   </header>`;
 
 const footer = `
@@ -55,6 +63,7 @@ const footer = `
     <span>tellme.mom — for those who needed to hear it</span>
     <a class="footer-help" href="${HELPLINE}" target="_blank" rel="noopener">Having a hard time? Find a helpline</a>
     <a href="/#terms">Terms &amp; Privacy</a>
+    <button type="button" class="link-btn" data-install hidden>Install app</button>
   </footer>`;
 
 function breadcrumbs(items) {
