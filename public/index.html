@@ -34,6 +34,9 @@
     }
   }
   </script>
+  <link rel="preload" href="/fonts/CormorantGaramond-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/CormorantGaramond-Italic-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/InstrumentSans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <script>
@@ -43,37 +46,47 @@
   <style>
     @font-face {
       font-family: 'Cormorant Garamond';
-      src: url('/fonts/CormorantGaramond.ttf') format('truetype');
+      src: url('/fonts/CormorantGaramond-latin.woff2') format('woff2');
       font-weight: 300 700;
       font-style: normal;
       font-display: swap;
+      unicode-range: U+0000-00FF, U+0100-017F, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
     }
     @font-face {
       font-family: 'Cormorant Garamond';
-      src: url('/fonts/CormorantGaramond-Italic.ttf') format('truetype');
+      src: url('/fonts/CormorantGaramond-Italic-latin.woff2') format('woff2');
       font-weight: 300 700;
       font-style: italic;
       font-display: swap;
+      unicode-range: U+0000-00FF, U+0100-017F, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
     }
     @font-face {
       font-family: 'Instrument Sans';
-      src: url('/fonts/InstrumentSans.ttf') format('truetype');
-      font-weight: 300 700;
+      src: url('/fonts/InstrumentSans-latin.woff2') format('woff2');
+      font-weight: 400 700;
       font-style: normal;
       font-display: swap;
+      unicode-range: U+0000-00FF, U+0100-017F, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
     }
 
     :root {
       --bg: #FDF8F3;
       --warm: #F5EDE0;
       --text: #2C2318;
-      --muted: #A8967E;
-      --accent: #C4785A;
+      --muted: #7E6B55;        /* small text: 4.8:1 on --bg */
+      --accent: #C4785A;       /* decorative & large text */
+      --accent-text: #A65D41;  /* small accent text: 4.7:1 on --bg */
       --accent2: #8B4F3A;
       --soft: #EDE0D0;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    [hidden] { display: none !important; }
+    :focus-visible { outline: 2px solid var(--accent-text); outline-offset: 3px; }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+    }
     html { height: 100%; }
 
     body {
@@ -206,10 +219,14 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: 1rem;
       font-style: italic;
+      font-weight: 400;
+      line-height: 1.3;
       color: var(--text);
       cursor: pointer;
       transition: all 0.25s ease;
       user-select: none;
+      -webkit-appearance: none;
+      appearance: none;
     }
     .need-chip:hover {
       border-color: var(--accent);
@@ -217,8 +234,8 @@
       transform: translateY(-1px);
     }
     .need-chip.selected {
-      border-color: var(--accent);
-      background: var(--accent);
+      border-color: var(--accent-text);
+      background: var(--accent-text);
       color: #fff;
     }
 
@@ -341,7 +358,16 @@
       color: var(--muted);
       margin-bottom: 2.5rem;
     }
-    .need-tag span { color: var(--accent); }
+    .need-tag span { color: var(--accent-text); }
+
+    .letter:focus { outline: none; }
+    .letter-note {
+      font-size: 0.8rem;
+      line-height: 1.6;
+      color: var(--muted);
+      max-width: 460px;
+      margin: -0.8rem auto 2rem;
+    }
 
     .msg-actions {
       display: flex;
@@ -392,7 +418,6 @@ footer {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
-  opacity: 0.4;
   z-index: 1;
   display: flex;
   align-items: center;
@@ -401,13 +426,20 @@ footer {
   margin-top: 2rem;
   padding-bottom: 1.5rem;
 }
-footer a {
+footer a, .link-btn {
   color: var(--muted);
   text-decoration: none;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: color 0.2s;
+  background: none;
+  border: none;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  padding: 0.3rem 0;
 }
-footer a:hover { opacity: 0.8; }
+footer a:hover, .link-btn:hover { color: var(--text); }
+.footer-help { text-decoration: underline; text-underline-offset: 3px; }
 .footer-dot {
   width: 2px;
   height: 2px;
@@ -436,6 +468,14 @@ footer a:hover { opacity: 0.8; }
       font-family: 'Instrument Sans', sans-serif;
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    .turnstile-box {
+      position: fixed;
+      left: 50%;
+      bottom: 1.5rem;
+      transform: translateX(-50%);
+      z-index: 250;
+    }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(22px); }
@@ -491,12 +531,15 @@ footer a:hover { opacity: 0.8; }
       justify-content: center;
       padding: 1.5rem;
       opacity: 0;
+      visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.35s ease;
+      transition: opacity 0.35s ease, visibility 0s linear 0.35s;
     }
     .share-overlay.open {
       opacity: 1;
+      visibility: visible;
       pointer-events: all;
+      transition: opacity 0.35s ease, visibility 0s;
     }
     .share-modal {
       position: relative;
@@ -519,9 +562,11 @@ footer a:hover { opacity: 0.8; }
     .share-canvas-wrap img { width: 100%; display: block; }
     .share-modal-actions {
       display: flex;
+      flex-wrap: wrap;
       gap: 0.8rem;
       width: 100%;
     }
+    .share-modal-actions .btn-close-modal { flex: 1; }
     .btn-download {
       flex: 1;
       background: var(--accent);
@@ -560,7 +605,7 @@ footer a:hover { opacity: 0.8; }
       font-size: 0.7rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
+      color: rgba(255,255,255,0.65);
       text-align: center;
     }
 
@@ -577,12 +622,15 @@ footer a:hover { opacity: 0.8; }
       justify-content: center;
       padding: 1.5rem;
       opacity: 0;
+      visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.3s ease, visibility 0s linear 0.3s;
     }
     .legal-overlay.open {
       opacity: 1;
+      visibility: visible;
       pointer-events: all;
+      transition: opacity 0.3s ease, visibility 0s;
     }
     .legal-modal {
       background: var(--bg);
@@ -615,6 +663,7 @@ footer a:hover { opacity: 0.8; }
       margin: 2rem 0 0.6rem;
       letter-spacing: 0.02em;
     }
+    .legal-modal a { color: var(--accent-text); }
     .legal-modal p {
       font-size: 0.85rem;
       color: var(--muted);
@@ -645,6 +694,18 @@ footer a:hover { opacity: 0.8; }
     @media (max-width: 600px) {
       .legal-modal { padding: 2.5rem 1.8rem 2rem; }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        animation-delay: 0ms !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
+        scroll-behavior: auto !important;
+      }
+      .loading-text { opacity: 1; }
+    }
   </style>
 </head>
 
@@ -665,26 +726,26 @@ footer a:hover { opacity: 0.8; }
       <p class="subline">
         Some of us grew up without the words we needed most. They're here now. Whenever you're ready.
       </p>
-      <div class="need-prompt">What do you need to hear today?</div>
-      <div class="needs-grid" id="needsGrid">
-        <div class="need-chip" data-need="pride">I'm proud of you</div>
-        <div class="need-chip" data-need="love">I love you unconditionally</div>
-        <div class="need-chip" data-need="enough">You are enough</div>
-        <div class="need-chip" data-need="safe">You are safe with me</div>
-        <div class="need-chip" data-need="strong">You can do hard things</div>
-        <div class="need-chip" data-need="seen">I see you</div>
-        <div class="need-chip" data-need="home">You always have a home</div>
-        <div class="need-chip" data-need="surprise">Whatever I need most</div>
+      <div class="need-prompt" id="needPrompt">What do you need to hear today?</div>
+      <div class="needs-grid" id="needsGrid" role="group" aria-labelledby="needPrompt">
+        <button type="button" class="need-chip" data-need="pride" aria-pressed="false">I'm proud of you</button>
+        <button type="button" class="need-chip" data-need="love" aria-pressed="false">I love you unconditionally</button>
+        <button type="button" class="need-chip" data-need="enough" aria-pressed="false">You are enough</button>
+        <button type="button" class="need-chip" data-need="safe" aria-pressed="false">You are safe with me</button>
+        <button type="button" class="need-chip" data-need="strong" aria-pressed="false">You can do hard things</button>
+        <button type="button" class="need-chip" data-need="seen" aria-pressed="false">I see you</button>
+        <button type="button" class="need-chip" data-need="home" aria-pressed="false">You always have a home</button>
+        <button type="button" class="need-chip" data-need="surprise" aria-pressed="false">Whatever I need most</button>
       </div>
-      <button class="btn-receive" id="receiveBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+      <button type="button" class="btn-receive" id="receiveBtn">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="currentColor"/>
         </svg>
         Receive these words
       </button>
     </div>
 
-    <div id="loadingView">
+    <div id="loadingView" role="status" aria-live="polite">
       <div class="loading-text">She's thinking of you…</div>
       <div class="heartbeat">
         <div class="hb"></div>
@@ -694,16 +755,17 @@ footer a:hover { opacity: 0.8; }
     </div>
 
     <div id="messageView">
-      <div class="need-tag">A message about <span id="needLabel"></span></div>
-      <div class="letter">
+      <div class="need-tag" id="needTagText">A message about <span id="needLabel"></span></div>
+      <div class="letter" id="letter" tabindex="-1" aria-labelledby="needTagText letterBody">
         <span class="letter-salutation">My dear,</span>
         <p class="letter-body" id="letterBody"></p>
         <span class="letter-closing">With all my love, Mom</span>
       </div>
+      <p class="letter-note" id="letterNote" hidden></p>
       <div class="msg-actions">
-        <button class="btn-again" id="againBtn">Hear it again, differently</button>
-        <button class="btn-ghost" id="shareBtn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <button type="button" class="btn-again" id="againBtn">Hear it again, differently</button>
+        <button type="button" class="btn-ghost" id="shareBtn">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <circle cx="18" cy="5" r="3"/>
             <circle cx="6" cy="12" r="3"/>
             <circle cx="18" cy="19" r="3"/>
@@ -712,7 +774,7 @@ footer a:hover { opacity: 0.8; }
           </svg>
           Share
         </button>
-        <button class="btn-ghost" id="backBtn">← Choose another</button>
+        <button type="button" class="btn-ghost" id="backBtn">← Choose another</button>
       </div>
     </div>
 
@@ -720,36 +782,42 @@ footer a:hover { opacity: 0.8; }
 
   <footer>
     <span>tellme.mom — for those who needed to hear it</span>
-    <span class="footer-dot"></span>
-    <a id="legalLink">Terms &amp; Privacy</a>
+    <span class="footer-dot" aria-hidden="true"></span>
+    <a href="/letters">Read letters</a>
+    <span class="footer-dot" aria-hidden="true"></span>
+    <a class="footer-help" href="https://findahelpline.com" target="_blank" rel="noopener">Having a hard time? Find a helpline</a>
+    <span class="footer-dot" aria-hidden="true"></span>
+    <button type="button" class="link-btn" id="legalLink">Terms &amp; Privacy</button>
   </footer>
-  <div class="toast" id="toast"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="turnstile-box" id="turnstileBox"></div>
 
   <!-- SHARE POPUP -->
-  <div class="share-overlay" id="shareOverlay">
-    <div class="share-modal" id="shareModal">
+  <div class="share-overlay" id="shareOverlay" aria-hidden="true">
+    <div class="share-modal" id="shareModal" role="dialog" aria-modal="true" aria-label="Share your letter">
       <div class="share-canvas-wrap">
-        <img id="sharePreview" src="" alt="Your message card">
+        <img id="sharePreview" alt="Your letter as an image card">
       </div>
       <div class="share-modal-actions">
-        <button class="btn-download" id="downloadBtn">Save image</button>
-        <button class="btn-close-modal" id="closeModalBtn">Close</button>
+        <button type="button" class="btn-download" id="nativeShareBtn" hidden>Share…</button>
+        <button type="button" class="btn-download" id="downloadBtn">Save image</button>
+        <button type="button" class="btn-close-modal" id="closeModalBtn">Close</button>
       </div>
-      <div class="share-hint">Screenshot or save to share on Instagram &amp; Stories</div>
+      <div class="share-hint" id="shareHint">Save the image to share on Instagram &amp; Stories</div>
     </div>
   </div>
 
   <!-- LEGAL POPUP -->
-  <div class="legal-overlay" id="legalOverlay">
-    <div class="legal-modal">
-      <button class="legal-close" id="legalClose">&times;</button>
+  <div class="legal-overlay" id="legalOverlay" aria-hidden="true">
+    <div class="legal-modal" role="dialog" aria-modal="true" aria-labelledby="legalTitle">
+      <button type="button" class="legal-close" id="legalClose" aria-label="Close">&times;</button>
 
-      <h2>Terms of Use</h2>
+      <h2 id="legalTitle">Terms of Use</h2>
       <div class="legal-divider"></div>
       <p>tellme.mom is a free emotional wellness tool designed to offer words of comfort, love, and affirmation. By using this site, you agree to the following.</p>
 
       <h3>Not a substitute for therapy</h3>
-      <p>This site is not therapy. The messages generated here are created by an AI and are not a substitute for professional mental health support. If you are experiencing a crisis, depression, grief, or any form of emotional distress that feels overwhelming, please reach out to a qualified mental health professional or a crisis helpline in your country.</p>
+      <p>This site is not therapy. The messages generated here are created by an AI and are not a substitute for professional mental health support. If you are experiencing a crisis, depression, grief, or any form of emotional distress that feels overwhelming, please reach out to a qualified mental health professional or a crisis helpline in your country. You can find free, confidential helplines worldwide at <a href="https://findahelpline.com" target="_blank" rel="noopener">findahelpline.com</a>.</p>
 
       <h3>No claims</h3>
       <p>The words on this site are meant to offer comfort — not diagnosis, not advice, not treatment. We make no claims about therapeutic outcomes. You use this site at your own discretion. We are not responsible for how the content affects you emotionally. If at any point the experience feels difficult, please step away and take care of yourself first.</p>
@@ -760,19 +828,24 @@ footer a:hover { opacity: 0.8; }
       <h3>Privacy</h3>
       <p>We do not collect personal data. We do not require registration. We do not store your name, email, location, or any identifying information.</p>
       <p style="margin-top:0.8rem">When you request a message, your selected theme is sent to Anthropic's API — the AI that generates the response. This transmission is subject to Anthropic's own privacy policy at anthropic.com. We do not log, save, or have access to what was generated for you.</p>
+      <p style="margin-top:0.8rem">To keep the service free and protect it from abuse, we count how many letters are requested from each connection. We never store your IP address itself — only a one-way, irreversible hash of it, and these counters delete themselves automatically within about a day. A Cloudflare Turnstile check may run in the background to confirm requests come from a person rather than a bot; it is subject to Cloudflare's privacy policy. Like any website, our hosting provider (Vercel) keeps short-lived technical server logs, which can include IP addresses, for security and reliability.</p>
       <p style="margin-top:0.8rem">No cookies are used for tracking. We use Vercel Web Analytics to collect anonymous, aggregated page view data (no personal information, no behavior tracking, no user identification). This site exists to be a safe place — and that includes how we handle your data.</p>
     </div>
   </div>
 
-    <script>
-    if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual';
-    }
+  <script>
+  (function () {
+    'use strict';
+
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
     window.scrollTo(0, 0);
+
+    function $(id) { return document.getElementById(id); }
 
     var currentNeed = null;
     var currentMessage = "";
-
+    var currentNote = "";
+    var view = "intro";
 
     var needLabels = {
       pride:    "being proud of you",
@@ -785,125 +858,326 @@ footer a:hover { opacity: 0.8; }
       surprise: "what you need most"
     };
 
-    document.getElementById("needsGrid").addEventListener("click", function(e) {
-      var chip = e.target.closest(".need-chip");
-      if (!chip) return;
-      document.querySelectorAll(".need-chip").forEach(function(c) { c.classList.remove("selected"); });
-      chip.classList.add("selected");
-      currentNeed = chip.getAttribute("data-need");
-    });
+    // Letters written ahead of time. Shown only when a new letter can't be
+    // written, and always with an honest note saying so.
+    var KEEPSAKE_LETTERS = {
+      pride: [
+        "Watching you keep going on the days nobody noticed has been one of the quiet joys of my life. You didn't need a trophy or a title for me to feel this way. The way you are kind when it costs you something, the way you try again — that is what makes me proud. Just you, exactly as you are.",
+        "There is something in the way you carry yourself now that wasn't there years ago, and it moves me every time. You grew into it slowly, mostly alone, and still you came out gentle. Pride is too small a word for what I feel, but it's the closest one I have.",
+        "Nobody handed you an easy road, and you walked it anyway. Not perfectly, not without falling — but honestly, and with a heart that stayed open. That is what I'm proudest of, more than anything you could ever achieve."
+      ],
+      love: [
+        "Before you did a single thing, before your first word or your first mistake, you were already loved. Nothing you've done since has changed that, and nothing you do tomorrow will. On the messy days, the quiet days, the days you don't like yourself very much — the love is still here, steady and unbothered.",
+        "You don't have to earn this. You never did. My love isn't a prize for good behaviour; it is simply what happens when I think of you. Even now, even here, it's wrapped all the way around you.",
+        "Some love comes with conditions, and I'm so sorry if that's the kind you learned first. This is the other kind. It stays when you fail, it stays when you're difficult, it stays when you have nothing left to give."
+      ],
+      enough: [
+        "You keep trying to become someone worth loving, and my heart aches a little every time, because you already are. There is nothing to fix and nothing missing. The parts of you that you hide are not flaws to me — they are simply you, and you are enough.",
+        "Rest for a moment. You don't have to be more productive, more cheerful, more anything for me to be glad you exist. You were enough the day you were born, and you are enough tonight.",
+        "Whatever voice told you that you were too much or not enough — it was wrong. You were never a problem to be solved. You are a whole person, and that has always been plenty."
+      ],
+      safe: [
+        "Here you can put everything down. You don't have to be strong, or polite, or okay. If you need to cry, cry; if you need to say nothing at all, that's fine too. Nothing you feel will make me pull away.",
+        "Come in, close the door, take off the armour you've been wearing all day. No one here is keeping score. You can be tired, confused, unfinished — and still completely safe.",
+        "So many places asked you to be careful, to be quiet, to be good. This isn't one of them. With me, you can fall apart, and I will simply sit beside you until you're ready to stand."
+      ],
+      strong: [
+        "Look at everything you have already lived through — the nights you thought would never end, and did. You are still here, still trying, and that is what strength actually looks like. You can be scared and keep going at the same time.",
+        "Being exhausted doesn't mean you're weak; it means you've been carrying a lot for a long time. You've done hard things before, often without anyone noticing. Take a breath. You can do this one too, one small step at a time.",
+        "Strength isn't the absence of shaking hands. It's what you've been doing all along: getting up, showing up, trying again. Whatever is in front of you now, you don't have to face it fearless."
+      ],
+      seen: [
+        "There is so much you do that nobody notices — the effort behind the easy smile, the worries you keep to yourself so others don't have to carry them. I notice. I see the tired parts and the brave parts, and I love all of them.",
+        "The version of you the world gets is lovely, but it's not the whole story. Underneath there's someone deeper, softer, and more thoughtful than most people take the time to find. That someone is who I see when I look at you.",
+        "You've gotten so good at being fine that people forget to ask. So let me ask: how are you, really? Whatever the answer is, it matters to me — because the real you, all of you, matters to me."
+      ],
+      home: [
+        "Wherever you are tonight, however far you've wandered, there is a light on for you. Home was never a building — it's the feeling of being wanted, and you are wanted. The door is open, and it stays open.",
+        "You belong. Not because you fit in, not because you've earned a place, but simply because you are you. No distance and no amount of time can wear that thread thin.",
+        "On the nights you feel like you don't belong anywhere, come back to this: there is a place in my heart shaped exactly like you. Nobody else could ever fill it. You always have somewhere to come home to."
+      ],
+      surprise: [
+        "Whatever today held, you made it here, and that counts for something. You've been so hard on yourself lately — maybe tonight you could be just a little gentler. You deserve the same kindness you give so easily to everyone else.",
+        "Sometimes the bravest thing is simply to keep your heart soft in a hard world, and you have. Thank you for still being you. Your existence makes the world warmer.",
+        "After this, put the phone down for a moment and take one slow breath. Nothing needs solving in this exact second. You are loved, you are allowed to rest, and tomorrow can wait until tomorrow."
+      ]
+    };
 
-    document.getElementById("receiveBtn").addEventListener("click", function() {
-      if (!currentNeed) {
-        var chips = document.querySelectorAll(".need-chip");
-        var rand = chips[Math.floor(Math.random() * chips.length)];
-        rand.classList.add("selected");
-        currentNeed = rand.getAttribute("data-need");
-      }
-      showLoading();
-      generateMessage(currentNeed, function(msg) {
-        showMessage(msg, currentNeed);
-      });
-    });
+    var NOTES = {
+      daily_limit: "So many people needed these words today that we've reached our daily limit. This letter was written earlier, with the same love — new ones will be written tomorrow.",
+      daily_visitor_limit: "You've received many letters today. This one was written earlier, with the same love — new ones will be waiting for you tomorrow.",
+      verification_failed: "We couldn't confirm the connection, so this letter was written earlier, with the same love. You can try again in a moment.",
+      fallback: "We couldn't write a new letter just now, so this one was written earlier, with the same love. You can try again in a moment."
+    };
 
-    document.getElementById("againBtn").addEventListener("click", function() {
-      showLoading();
-      generateMessage(currentNeed, function(msg) {
-        showMessage(msg, currentNeed);
-      });
-    });
-
-    document.getElementById("backBtn").addEventListener("click", function() {
-      document.getElementById("messageView").classList.remove("visible");
-      document.getElementById("messageView").style.display = "none";
-      document.getElementById("introView").style.display = "";
-      document.getElementById("introView").style.animation = "fadeUp 0.6s ease-out both";
-      currentNeed = null;
-      document.querySelectorAll(".need-chip").forEach(function(c) { c.classList.remove("selected"); });
-    });
-
-    document.getElementById("shareBtn").addEventListener("click", shareCard);
-
-    // Legal popup
-    document.getElementById("legalLink").addEventListener("click", function() {
-      document.getElementById("legalOverlay").classList.add("open");
-    });
-    document.getElementById("legalClose").addEventListener("click", function() {
-      document.getElementById("legalOverlay").classList.remove("open");
-    });
-    document.getElementById("legalOverlay").addEventListener("click", function(e) {
-      if (e.target === this) this.classList.remove("open");
-    });
+    // ── Views ─────────────────────────────────────────────
+    function hideAll() {
+      $("introView").style.display = "none";
+      $("loadingView").classList.remove("visible");
+      var mv = $("messageView");
+      mv.classList.remove("visible");
+      mv.style.display = "none";
+    }
 
     function showLoading() {
-      document.getElementById("introView").style.display = "none";
-      document.getElementById("messageView").classList.remove("visible");
-      document.getElementById("messageView").style.display = "none";
-      document.getElementById("loadingView").classList.add("visible");
+      hideAll();
+      $("loadingView").classList.add("visible");
+      view = "loading";
     }
 
     function showIntro() {
-      document.getElementById("loadingView").classList.remove("visible");
-      document.getElementById("messageView").classList.remove("visible");
-      document.getElementById("messageView").style.display = "none";
-      document.getElementById("introView").style.display = "";
-      document.getElementById("introView").style.animation = "fadeUp 0.6s ease-out both";
+      hideAll();
+      var iv = $("introView");
+      iv.style.display = "";
+      iv.style.animation = "fadeUp 0.6s ease-out both";
+      view = "intro";
     }
 
-    function showMessage(msg, need) {
+    function showMessage(msg, need, note) {
       currentMessage = msg;
-      document.getElementById("loadingView").classList.remove("visible");
-      document.getElementById("letterBody").textContent = msg;
-      document.getElementById("needLabel").textContent = needLabels[need] || need;
-      var mv = document.getElementById("messageView");
+      currentNote = note || "";
+      hideAll();
+      $("letterBody").textContent = msg;
+      $("needLabel").textContent = needLabels[need] || need;
+      var noteEl = $("letterNote");
+      noteEl.textContent = currentNote;
+      noteEl.hidden = !currentNote;
+      var mv = $("messageView");
       mv.style.display = "flex";
       void mv.offsetWidth;
       mv.classList.add("visible");
+      view = "message";
+      // Move focus to the letter so keyboard and screen-reader users land on it.
+      $("letter").focus({ preventScroll: true });
     }
 
-    function generateMessage(need, cb) {
-      fetch("/api/message", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Cache-Control": "no-cache"
-        },
-        body: JSON.stringify({ need: need, _t: Date.now() })
+    function restoreView(prev) {
+      if (prev === "message" && currentMessage) showMessage(currentMessage, currentNeed, currentNote);
+      else showIntro();
+    }
+
+    // ── Need chips ────────────────────────────────────────
+    var chips = Array.prototype.slice.call(document.querySelectorAll(".need-chip"));
+
+    function selectChip(chip) {
+      chips.forEach(function (c) {
+        c.classList.remove("selected");
+        c.setAttribute("aria-pressed", "false");
+      });
+      currentNeed = null;
+      if (chip) {
+        chip.classList.add("selected");
+        chip.setAttribute("aria-pressed", "true");
+        currentNeed = chip.getAttribute("data-need");
+      }
+    }
+
+    $("needsGrid").addEventListener("click", function (e) {
+      var chip = e.target.closest(".need-chip");
+      if (chip) selectChip(chip);
+    });
+
+    $("receiveBtn").addEventListener("click", function () {
+      if (!currentNeed) selectChip(chips[Math.floor(Math.random() * chips.length)]);
+      requestLetter(currentNeed);
+    });
+
+    $("againBtn").addEventListener("click", function () {
+      requestLetter(currentNeed);
+    });
+
+    $("backBtn").addEventListener("click", function () {
+      selectChip(null);
+      showIntro();
+      chips[0].focus({ preventScroll: true });
+    });
+
+    // ── Cloudflare Turnstile (only if the server provides a site key) ──
+    var ts = { siteKey: null, widgetId: null, used: false, pending: null, readyResolve: null };
+    var turnstileReady = new Promise(function (resolve) { ts.readyResolve = resolve; });
+
+    function resolveToken(token) {
+      if (ts.pending) { var p = ts.pending; ts.pending = null; p(token); }
+    }
+
+    window.onTurnstileLoad = function () {
+      try {
+        ts.widgetId = window.turnstile.render("#turnstileBox", {
+          sitekey: ts.siteKey,
+          execution: "execute",
+          appearance: "interaction-only",
+          callback: function (token) { resolveToken(token); },
+          "error-callback": function () { resolveToken(null); },
+          "expired-callback": function () { ts.used = true; },
+          "timeout-callback": function () { resolveToken(null); }
+        });
+      } catch (e) { ts.widgetId = null; }
+      ts.readyResolve();
+    };
+
+    fetch("/api/config")
+      .then(function (r) { return r.ok ? r.json() : {}; })
+      .then(function (cfg) {
+        if (!cfg || !cfg.turnstileSiteKey) { ts.readyResolve(); return; }
+        ts.siteKey = cfg.turnstileSiteKey;
+        var s = document.createElement("script");
+        s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad";
+        s.async = true;
+        s.onerror = function () { ts.readyResolve(); };
+        document.head.appendChild(s);
       })
-      .then(function(r) {
-        if (r.status === 429) {
-          return r.json().then(function(d) {
-            var sec = d.retryAfter || 60;
-            showToast("Take a breath\u2026 try again in " + sec + "s");
-            showIntro();
-            return null;
-          });
-        }
-        return r.json();
-      })
-      .then(function(data) {
-        if (!data) return;
-        if (data.message) {
-          cb(data.message);
-        } else {
-          cb("You are so deeply loved. More than words can hold. I should have said this every single day.");
-        }
-      })
-      .catch(function() {
-        cb("You are so deeply loved. More than words can hold. I should have said this every single day.");
+      .catch(function () { ts.readyResolve(); });
+
+    function delay(ms, value) {
+      return new Promise(function (resolve) { setTimeout(function () { resolve(value); }, ms); });
+    }
+
+    function getTurnstileToken() {
+      return Promise.race([turnstileReady, delay(6000)]).then(function () {
+        if (!ts.siteKey || ts.widgetId === null || !window.turnstile) return null;
+        return new Promise(function (resolve) {
+          ts.pending = resolve;
+          try {
+            if (ts.used) window.turnstile.reset(ts.widgetId);
+            ts.used = true;
+            window.turnstile.execute(ts.widgetId);
+          } catch (e) { resolveToken(null); }
+          // Give an interactive challenge time, but never hang forever.
+          setTimeout(function () { if (ts.pending === resolve) resolveToken(null); }, 25000);
+        });
       });
     }
 
-    function showToast(msg) {
-      var t = document.getElementById("toast");
-      t.textContent = msg;
-      t.classList.add("show");
-      setTimeout(function() { t.classList.remove("show"); }, 2400);
+    // ── Letters ───────────────────────────────────────────
+    function fetchWithTimeout(url, options, ms) {
+      if (!window.AbortController) return fetch(url, options);
+      var ctrl = new AbortController();
+      var timer = setTimeout(function () { ctrl.abort(); }, ms);
+      options.signal = ctrl.signal;
+      return fetch(url, options).finally(function () { clearTimeout(timer); });
     }
 
-    function shareCard() {
-      if (!currentMessage) return;
+    function keepsakeLetter(need) {
+      var list = KEEPSAKE_LETTERS[need] || KEEPSAKE_LETTERS.surprise;
+      var options = list.filter(function (t) { return t !== currentMessage; });
+      if (!options.length) options = list;
+      return options[Math.floor(Math.random() * options.length)];
+    }
 
+    function showKeepsake(need, code) {
+      showMessage(keepsakeLetter(need), need, NOTES[code] || NOTES.fallback);
+    }
+
+    var busy = false;
+
+    function requestLetter(need) {
+      if (busy) return;
+      busy = true;
+      var prev = view;
+      showLoading();
+
+      getTurnstileToken()
+        .then(function (token) {
+          var payload = { need: need };
+          if (token) payload.turnstileToken = token;
+          return fetchWithTimeout("/api/message", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          }, 30000);
+        })
+        .then(function (r) {
+          return r.json()
+            .catch(function () { return {}; })
+            .then(function (data) { return { status: r.status, data: data || {} }; });
+        })
+        .then(function (res) {
+          var d = res.data;
+          if (res.status === 200 && d.message) {
+            showMessage(d.message, need, "");
+          } else if (res.status === 429 && d.code === "rate_limited") {
+            showToast("Take a breath… try again in " + (d.retryAfter || 60) + "s");
+            restoreView(prev);
+          } else {
+            showKeepsake(need, d.code);
+          }
+        })
+        .catch(function () { showKeepsake(need, "fallback"); })
+        .finally(function () { busy = false; });
+    }
+
+    var toastTimer = null;
+    function showToast(msg) {
+      var t = $("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { t.classList.remove("show"); }, 2800);
+    }
+
+    // ── Dialogs: Esc to close, focus kept inside, focus restored ──
+    var openOverlay = null;
+    var focusBeforeDialog = null;
+    var FOCUSABLE = 'a[href], button:not([disabled]):not([hidden]), [tabindex]:not([tabindex="-1"])';
+
+    function openDialog(overlay, focusTarget) {
+      focusBeforeDialog = document.activeElement;
+      overlay.classList.add("open");
+      overlay.removeAttribute("aria-hidden");
+      openOverlay = overlay;
+      var target = focusTarget || overlay.querySelector(FOCUSABLE);
+      if (target) setTimeout(function () { target.focus(); }, 30);
+    }
+
+    function closeDialog(overlay) {
+      overlay.classList.remove("open");
+      overlay.setAttribute("aria-hidden", "true");
+      if (openOverlay === overlay) openOverlay = null;
+      if (focusBeforeDialog && focusBeforeDialog.focus) focusBeforeDialog.focus();
+    }
+
+    document.addEventListener("keydown", function (e) {
+      if (!openOverlay) return;
+      if (e.key === "Escape") {
+        e.preventDefault();
+        closeDialog(openOverlay);
+      } else if (e.key === "Tab") {
+        var items = Array.prototype.slice.call(openOverlay.querySelectorAll(FOCUSABLE));
+        if (!items.length) return;
+        var first = items[0], last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        else if (!openOverlay.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+      }
+    });
+
+    $("legalLink").addEventListener("click", function () { openDialog($("legalOverlay")); });
+    $("legalClose").addEventListener("click", function () { closeDialog($("legalOverlay")); });
+    $("legalOverlay").addEventListener("click", function (e) {
+      if (e.target === this) closeDialog(this);
+    });
+
+    $("closeModalBtn").addEventListener("click", function () { closeDialog($("shareOverlay")); });
+    $("shareOverlay").addEventListener("click", function (e) {
+      if (e.target === this) closeDialog(this);
+    });
+
+    // ── Share card (1080×1920, Stories format) ────────────
+    var share = { url: null, file: null };
+    var CARD_SERIF = "'Cormorant Garamond', Georgia, serif";
+    var CARD_SANS = "'Instrument Sans', Helvetica, Arial, sans-serif";
+
+    function loadCardFonts(text) {
+      if (!document.fonts || !document.fonts.load) return Promise.resolve();
+      var sample = (text || "") + " My dear, With all my love, Mom";
+      return Promise.all([
+        document.fonts.load("300 72px 'Cormorant Garamond'", sample),
+        document.fonts.load("italic 300 44px 'Cormorant Garamond'", sample),
+        document.fonts.load("400 26px 'Instrument Sans'", "A MESSAGE FROM MOM tellme.mom")
+      ]).catch(function () {});
+    }
+
+    function drawCard(message) {
       var W = 1080, H = 1920;
       var canvas = document.createElement("canvas");
       canvas.width = W; canvas.height = H;
@@ -919,130 +1193,173 @@ footer a:hover { opacity: 0.8; }
       function glow(x, y, r, color) {
         var g = ctx.createRadialGradient(x, y, 0, x, y, r);
         g.addColorStop(0, color);
-        g.addColorStop(1, "transparent");
+        g.addColorStop(1, "rgba(253,246,238,0)");
         ctx.fillStyle = g;
         ctx.beginPath();
-        ctx.arc(x, y, r, 0, Math.PI*2);
+        ctx.arc(x, y, r, 0, Math.PI * 2);
         ctx.fill();
       }
-      glow(W*0.15, H*0.1, 700, "rgba(196,120,90,0.09)");
-      glow(W*0.85, H*0.9, 800, "rgba(196,120,90,0.07)");
-      glow(W*0.5, H*0.5, 1000, "rgba(245,230,210,0.25)");
+      glow(W * 0.15, H * 0.1, 700, "rgba(196,120,90,0.09)");
+      glow(W * 0.85, H * 0.9, 800, "rgba(196,120,90,0.07)");
+      glow(W * 0.5, H * 0.5, 1000, "rgba(245,230,210,0.25)");
 
-      var PAD = 120;
-      var TOP_ZONE = 260;
-      var BOT_ZONE = 260;
-      var MID_TOP = TOP_ZONE;
-      var MID_BOT = H - BOT_ZONE;
-      var MID_H = MID_BOT - MID_TOP;
-
-      ctx.font = "400 26px 'Instrument Sans', sans-serif";
-      ctx.fillStyle = "rgba(168,150,126,0.7)";
-      ctx.textAlign = "center";
-      ctx.fillText("A MESSAGE FROM MOM", W/2, 110);
-
-      ctx.strokeStyle = "rgba(196,120,90,0.2)";
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(W/2 - 100, 136);
-      ctx.lineTo(W/2 + 100, 136);
-      ctx.stroke();
-
-      ctx.font = "italic 300 40px Georgia, serif";
-      ctx.fillStyle = "rgba(168,150,126,0.85)";
-      ctx.textAlign = "left";
-      ctx.fillText("My dear,", PAD, 210);
-
-      ctx.strokeStyle = "rgba(196,120,90,0.12)";
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(PAD, 232);
-      ctx.lineTo(W - PAD, 232);
-      ctx.stroke();
-
-      var maxW = W - PAD * 2;
-      var fontSize = 72;
-      var lineH, lines;
-
-      function wrapText(size) {
-        var lh = size * 1.52;
-        var wrds = currentMessage.split(" ");
-        var ls = [];
-        var ln = "";
-        ctx.font = "300 " + size + "px Georgia, serif";
-        for (var i = 0; i < wrds.length; i++) {
-          var test = ln ? ln + " " + wrds[i] : wrds[i];
-          if (ctx.measureText(test).width > maxW) {
-            if (ln) ls.push(ln);
-            ln = wrds[i];
-          } else {
-            ln = test;
-          }
-        }
-        if (ln) ls.push(ln);
-        return { lines: ls, lineH: lh };
+      function line(x1, y1, x2, y2, color) {
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
       }
 
-      for (var fs = 72; fs >= 40; fs -= 2) {
-        var result = wrapText(fs);
-        var totalH = result.lines.length * result.lineH;
-        if (totalH <= MID_H - 80) {
-          fontSize = fs;
-          lineH = result.lineH;
-          lines = result.lines;
+      var PAD = 120;
+      var MID_TOP = 260;
+      var MID_BOT = H - 260;
+      var MID_H = MID_BOT - MID_TOP;
+      var maxW = W - PAD * 2;
+
+      ctx.font = "400 26px " + CARD_SANS;
+      ctx.fillStyle = "rgba(126,107,85,0.85)";
+      ctx.textAlign = "center";
+      if ("letterSpacing" in ctx) ctx.letterSpacing = "6px";
+      ctx.fillText("A MESSAGE FROM MOM", W / 2, 110);
+      if ("letterSpacing" in ctx) ctx.letterSpacing = "0px";
+      line(W / 2 - 100, 136, W / 2 + 100, 136, "rgba(196,120,90,0.25)");
+
+      ctx.font = "italic 300 46px " + CARD_SERIF;
+      ctx.fillStyle = "rgba(126,107,85,0.9)";
+      ctx.textAlign = "left";
+      ctx.fillText("My dear,", PAD, 210);
+      line(PAD, 232, W - PAD, 232, "rgba(196,120,90,0.15)");
+
+      // Wrap text, keeping paragraph breaks.
+      function wrap(size) {
+        ctx.font = "300 " + size + "px " + CARD_SERIF;
+        var out = [];
+        String(message).split(/\n+/).forEach(function (para, pi) {
+          if (pi > 0) out.push("");
+          var words = para.trim().split(/\s+/);
+          var ln = "";
+          for (var i = 0; i < words.length; i++) {
+            var test = ln ? ln + " " + words[i] : words[i];
+            if (ctx.measureText(test).width > maxW && ln) {
+              out.push(ln);
+              ln = words[i];
+            } else {
+              ln = test;
+            }
+          }
+          if (ln) out.push(ln);
+        });
+        return out;
+      }
+
+      var fontSize = 46, lines = null, lineH = 0;
+      for (var fs = 84; fs >= 46; fs -= 2) {
+        var candidate = wrap(fs);
+        var lh = fs * 1.42;
+        if (candidate.length * lh <= MID_H - 80) {
+          fontSize = fs; lines = candidate; lineH = lh;
           break;
         }
       }
-      if (!lines) {
-        var r2 = wrapText(40);
-        fontSize = 40; lineH = r2.lineH; lines = r2.lines;
-      }
+      if (!lines) { lines = wrap(46); lineH = 46 * 1.42; }
 
-      var totalTextH = lines.length * lineH;
-      var startY = MID_TOP + (MID_H - totalTextH) / 2 + fontSize * 0.8;
-
-      ctx.font = "300 " + fontSize + "px Georgia, serif";
+      var startY = MID_TOP + (MID_H - lines.length * lineH) / 2 + fontSize * 0.8;
+      ctx.font = "300 " + fontSize + "px " + CARD_SERIF;
       ctx.fillStyle = "#2C2318";
       ctx.textAlign = "left";
       for (var j = 0; j < lines.length; j++) {
-        ctx.fillText(lines[j], PAD, startY + j * lineH);
+        if (lines[j]) ctx.fillText(lines[j], PAD, startY + j * lineH);
       }
 
-      var footerY = MID_BOT + 60;
-      ctx.strokeStyle = "rgba(196,120,90,0.15)";
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(PAD, MID_BOT + 20);
-      ctx.lineTo(W - PAD, MID_BOT + 20);
-      ctx.stroke();
-
-      ctx.font = "italic 300 40px Georgia, serif";
-      ctx.fillStyle = "rgba(168,150,126,0.85)";
+      line(PAD, MID_BOT + 20, W - PAD, MID_BOT + 20, "rgba(196,120,90,0.15)");
+      ctx.font = "italic 300 46px " + CARD_SERIF;
+      ctx.fillStyle = "rgba(126,107,85,0.9)";
       ctx.textAlign = "right";
-      ctx.fillText("With all my love, Mom", W - PAD, footerY);
+      ctx.fillText("With all my love, Mom", W - PAD, MID_BOT + 70);
 
-      ctx.font = "300 32px 'Instrument Sans', sans-serif";
-      ctx.fillStyle = "rgba(196,120,90,0.65)";
+      ctx.font = "400 32px " + CARD_SANS;
+      ctx.fillStyle = "rgba(166,93,65,0.8)";
       ctx.textAlign = "center";
-      ctx.fillText("tellme.mom", W/2, H - 100);
+      ctx.fillText("tellme.mom", W / 2, H - 100);
 
-      var dataUrl = canvas.toDataURL("image/png");
-      document.getElementById("sharePreview").src = dataUrl;
-      document.getElementById("downloadBtn").onclick = function() {
-        var link = document.createElement("a");
-        link.download = "frommom.png";
-        link.href = dataUrl;
-        link.click();
-      };
-      document.getElementById("shareOverlay").classList.add("open");
+      return canvas;
     }
 
-    document.getElementById("closeModalBtn").addEventListener("click", function() {
-      document.getElementById("shareOverlay").classList.remove("open");
+    function canShareFiles(file) {
+      try {
+        return !!(navigator.canShare && navigator.share && navigator.canShare({ files: [file] }));
+      } catch (e) { return false; }
+    }
+
+    function shareCard() {
+      if (!currentMessage) return;
+      var message = currentMessage;
+      loadCardFonts(message).then(function () {
+        var canvas = drawCard(message);
+        canvas.toBlob(function (blob) {
+          if (!blob) { showToast("Couldn't create the image"); return; }
+          if (share.url) URL.revokeObjectURL(share.url);
+          share.url = URL.createObjectURL(blob);
+          share.file = null;
+          try { share.file = new File([blob], "tellme-mom-letter.png", { type: "image/png" }); } catch (e) {}
+
+          $("sharePreview").src = share.url;
+
+          var nativeOk = share.file && canShareFiles(share.file);
+          var nativeBtn = $("nativeShareBtn");
+          var dlBtn = $("downloadBtn");
+          nativeBtn.hidden = !nativeOk;
+          dlBtn.className = nativeOk ? "btn-close-modal" : "btn-download";
+          $("shareHint").textContent = nativeOk
+            ? "Share straight to Instagram, Telegram or Messages — or save it"
+            : "Save the image to share on Instagram & Stories";
+
+          openDialog($("shareOverlay"), nativeOk ? nativeBtn : dlBtn);
+        }, "image/png");
+      });
+    }
+
+    $("shareBtn").addEventListener("click", shareCard);
+
+    // ── Deep links from the letter pages ──────────────────
+    // /?need=pride preselects a theme (never auto-generates, so crawlers cost nothing).
+    // /#terms opens Terms & Privacy.
+    (function () {
+      var params = new URLSearchParams(location.search);
+      var need = params.get("need");
+      var chip = need && chips.filter(function (c) { return c.getAttribute("data-need") === need; })[0];
+      if (chip) {
+        selectChip(chip);
+        history.replaceState(null, "", location.pathname + location.hash);
+        setTimeout(function () { $("receiveBtn").focus({ preventScroll: true }); }, 50);
+      }
+      if (location.hash === "#terms") openDialog($("legalOverlay"));
+      window.addEventListener("hashchange", function () {
+        if (location.hash === "#terms") openDialog($("legalOverlay"));
+      });
+    })();
+
+    $("nativeShareBtn").addEventListener("click", function () {
+      if (!share.file) return;
+      navigator.share({ files: [share.file], title: "A letter from mom", text: "tellme.mom" })
+        .catch(function (err) {
+          if (err && err.name === "AbortError") return; // user closed the share sheet
+          showToast("Couldn't open sharing — try Save image");
+        });
     });
-    document.getElementById("shareOverlay").addEventListener("click", function(e) {
-      if (e.target === this) this.classList.remove("open");
+
+    $("downloadBtn").addEventListener("click", function () {
+      if (!share.url) return;
+      var link = document.createElement("a");
+      link.download = "tellme-mom-letter.png";
+      link.href = share.url;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
     });
+  })();
   </script>
 
 </body>

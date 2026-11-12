@@ -1,11 +1,13 @@
 {
   "version": 2,
   "builds": [
-    { "src": "api/message.js", "use": "@vercel/node" },
+    { "src": "api/*.js", "use": "@vercel/node" },
     { "src": "public/**", "use": "@vercel/static" }
   ],
   "routes": [
     { "src": "/api/message", "dest": "/api/message.js" },
+    { "src": "/api/config", "dest": "/api/config.js" },
+    { "src": "/(letters|im-proud-of-you|i-love-you|you-are-enough|you-are-safe|you-can-do-hard-things|i-see-you|you-always-have-a-home)/?", "dest": "/public/$1.html" },
     { "src": "/(.*)", "dest": "/public/$1" }
   ],
   "headers": [
@@ -23,7 +25,7 @@
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "X-Frame-Options", "value": "DENY" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; connect-src 'self'; frame-ancestors 'none'" }
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; connect-src 'self'; frame-src https://challenges.cloudflare.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" }
       ]
     }
   ]
