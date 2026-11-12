@@ -14,11 +14,17 @@ const PER_MINUTE_LIMIT   = intEnv('PER_MINUTE_LIMIT', 5);      // per visitor, p
 const PER_IP_DAILY_LIMIT = intEnv('PER_IP_DAILY_LIMIT', 60);   // per visitor, per day
 const DAILY_LIMIT        = intEnv('DAILY_MESSAGE_LIMIT', 3000); // whole site, per day (spend cap)
 
-const ANTHROPIC_TIMEOUT_MS = 15000;
+const ANTHROPIC_TIMEOUT_MS = 15000;        // non-streaming request
+const ANTHROPIC_STREAM_TIMEOUT_MS = 25000; // whole streamed letter
 const MODEL = 'claude-opus-4-6';
 
 const ALLOWED_ORIGINS = ['https://tellme.mom', 'https://www.tellme.mom'];
-const ALLOWED_NEEDS = ['pride', 'love', 'enough', 'safe', 'strong', 'seen', 'home', 'surprise'];
+const ALLOWED_NEEDS = [
+  // themes
+  'pride', 'love', 'enough', 'safe', 'strong', 'seen', 'home', 'surprise',
+  // situations
+  'interview', 'exam', 'newstart', 'breakup', 'birthday', 'newparent', 'hardnews'
+];
 
 function intEnv(name, fallback) {
   const n = parseInt(env[name], 10);
@@ -167,7 +173,16 @@ const needContexts = {
   strong:   "The person needs to hear that they are strong and capable of getting through hard things. Vary the angle: strength isn't the absence of fear, they've survived harder things than they remember, exhaustion is not weakness, they can do this even shaking.",
   seen:     "The person needs to hear that they are truly seen and understood — the real them, not the version they show the world. Each time notice something different: their hidden effort, their depth, the way they carry things alone, their light that they don't recognise in themselves.",
   home:     "The person needs to hear that they always belong somewhere and are never truly alone. Vary the approach each time: home as a feeling not a place, the door that is always open, belonging that doesn't expire, the invisible thread that connects them back no matter how far they've gone.",
-  surprise: "Write whatever this person needs to hear most right now — you choose. It could be about love, strength, belonging, being seen, or something else entirely. Trust your instincts as a mother. Make it feel like you know exactly what they needed without them having to ask."
+  surprise: "Write whatever this person needs to hear most right now — you choose. It could be about love, strength, belonging, being seen, or something else entirely. Trust your instincts as a mother. Make it feel like you know exactly what they needed without them having to ask.",
+
+  // Situations — what is happening in the person's life right now.
+  interview: "The person has a job interview tomorrow and is nervous. Calm them and remind them who they are, not how to perform. Their worth doesn't depend on the outcome, and you'll be just as proud of them either way. No interview tips or advice.",
+  exam:      "The person has an exam coming up and is anxious. Ease the pressure: one test doesn't measure who they are, the effort they've put in counts, and you love them the same whatever the result. No study advice.",
+  newstart:  "The person is starting something new — a new job, a new city, a new chapter — and feels unsure. Speak to the courage it takes to begin, the awkwardness of being new, and how much you believe in them.",
+  breakup:   "The person's heart has just been broken by a breakup. Comfort them without criticising the other person and without rushing them to feel better. Their grief makes sense, they are still lovable, and the hurt will soften with time.",
+  birthday:  "It is the person's birthday today. Write the birthday letter they may never have received: celebrate the day they arrived, how glad you are that they exist, and who they have become. Warm, a little joyful, never performative.",
+  newparent: "The person has just become a parent, perhaps without having had the parent they needed. Reassure them that they don't have to be perfect, that the love they give is real even when they feel unsure, and that they deserve care too.",
+  hardnews:  "The person has just received hard news — it could be about health, family, work or anything else. Do not guess what it is, give advice, or promise that everything will be fine. Simply be with them: they don't have to be okay right now, and they are not alone with this."
 };
 
 const angles = [
@@ -268,6 +283,116 @@ async function generateWithRetry(apiKey, need) {
 }
 
 // ─────────────────────────────────────────────────────────────
+// Streaming: the letter is sent to the browser as it is written.
+// Errors that happen before the first byte still return normal JSON.
+// ─────────────────────────────────────────────────────────────
+async function openAnthropicStream(apiKey, need) {
+  let resp;
+  try {
+    resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        max_tokens: 300,
+        temperature: 1,
+        stream: true,
+        system: buildSystemPrompt(),
+        messages: [{ role: 'user', content: needContexts[need] }]
+      }),
+      signal: AbortSignal.timeout(ANTHROPIC_STREAM_TIMEOUT_MS)
+    });
+  } catch (err) {
+    if (err.name === 'TimeoutError' || err.name === 'AbortError') {
+      throw new UpstreamError('timeout', 504, 'Anthropic stream timed out');
+    }
+    throw new UpstreamError('upstream_error', 502, 'Network error: ' + err.message);
+  }
+
+  if (!resp.ok) {
+    let type = 'unknown';
+    try { type = (await resp.json())?.error?.type || type; } catch (_) { /* ignore */ }
+    if (resp.status === 429 || resp.status === 529 || resp.status >= 500) {
+      throw new UpstreamError('busy', 503, `Anthropic ${resp.status} ${type}`);
+    }
+    throw new UpstreamError('upstream_error', 502, `Anthropic ${resp.status} ${type}`);
+  }
+  return resp;
+}
+
+async function openStreamWithRetry(apiKey, need) {
+  const started = Date.now();
+  try {
+    return await openAnthropicStream(apiKey, need);
+  } catch (err) {
+    if (err.code === 'busy' && Date.now() - started < 4000) {
+      await new Promise((r) => setTimeout(r, 700));
+      return await openAnthropicStream(apiKey, need);
+    }
+    throw err;
+  }
+}
+
+// Parses a server-sent-events body into JSON objects.
+async function* readSSE(body) {
+  const decoder = new TextDecoder();
+  let buffer = '';
+  for await (const chunk of body) {
+    buffer += decoder.decode(chunk, { stream: true });
+    let idx;
+    while ((idx = buffer.indexOf('\n\n')) !== -1) {
+      const block = buffer.slice(0, idx);
+      buffer = buffer.slice(idx + 2);
+      const data = block.split('\n')
+        .filter((l) => l.startsWith('data:'))
+        .map((l) => l.slice(5).trimStart())
+        .join('\n');
+      if (!data) continue;
+      try { yield JSON.parse(data); } catch (_) { /* skip malformed event */ }
+    }
+  }
+}
+
+async function streamLetter(res, apiKey, need) {
+  // Throws UpstreamError before any byte is sent → caller returns JSON.
+  const upstream = await openStreamWithRetry(apiKey, need);
+
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
+  res.setHeader('Cache-Control', 'no-cache, no-transform');
+  res.setHeader('X-Accel-Buffering', 'no');
+  if (typeof res.flushHeaders === 'function') res.flushHeaders();
+
+  const send = (obj) => res.write('data: ' + JSON.stringify(obj) + '\n\n');
+  let gotText = false;
+
+  try {
+    for await (const evt of readSSE(upstream.body)) {
+      if (evt.type === 'content_block_delta' && evt.delta?.type === 'text_delta' && evt.delta.text) {
+        send({ t: evt.delta.text });
+        gotText = true;
+      } else if (evt.type === 'message_delta' && evt.delta?.stop_reason === 'refusal') {
+        send({ error: 'upstream_error' });
+        return res.end();
+      } else if (evt.type === 'error') {
+        console.error('[tellme] stream error event:', evt.error?.type);
+        send({ error: evt.error?.type === 'overloaded_error' ? 'busy' : 'upstream_error' });
+        return res.end();
+      }
+    }
+    send(gotText ? { done: true } : { error: 'upstream_error' });
+  } catch (err) {
+    console.error('[tellme] stream interrupted:', err.name, err.message);
+    send({ error: err.name === 'TimeoutError' || err.name === 'AbortError' ? 'timeout' : 'upstream_error' });
+  }
+  return res.end();
+}
+
+// ─────────────────────────────────────────────────────────────
 // Handler
 // ─────────────────────────────────────────────────────────────
 function fail(res, status, code, message, extra = {}) {
@@ -305,6 +430,7 @@ export default async function handler(req, res) {
     }
 
     const { need, turnstileToken } = body;
+    const wantsStream = body.stream === true;
     if (!ALLOWED_NEEDS.includes(need)) {
       return fail(res, 400, 'invalid_request', 'Invalid need parameter');
     }
@@ -342,6 +468,7 @@ export default async function handler(req, res) {
     }
 
     // --- Generate ---
+    if (wantsStream) return await streamLetter(res, apiKey, need);
     const message = await generateWithRetry(apiKey, need);
     return res.status(200).json({ message });
 
