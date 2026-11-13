@@ -384,8 +384,9 @@
       var backlog = target.length - shown;
       var wait = PACE.charMs;
       if (backlog > 0) {
-        // Only a very long backlog speeds up a little, so long letters don't drag.
-        var step = reducedMotion ? backlog : backlog > 350 ? 2 : 1;
+        // Always one character at a time: the pace never speeds up, however
+        // much text has already arrived from the server.
+        var step = reducedMotion ? backlog : 1;
         shown = Math.min(target.length, shown + step);
         el.textContent = target.slice(0, shown);
         var last = target.charAt(shown - 1);
