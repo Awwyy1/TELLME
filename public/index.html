@@ -618,20 +618,34 @@ footer a:hover, .link-btn:hover { color: var(--text); }
     .share-overlay.open .share-modal { transform: translateY(0); }
     .share-canvas-wrap {
       width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    /* The card always fits on screen together with the buttons. */
+    .share-canvas-wrap img {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      max-height: calc(100vh - 230px);
+      max-height: calc(100dvh - 230px);
       border-radius: 12px;
-      overflow: hidden;
       box-shadow: 0 32px 80px rgba(0,0,0,0.5);
     }
-    .share-canvas-wrap img { width: 100%; display: block; }
+    /* Share: primary action on its own row, Save + Close side by side. */
     .share-modal-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.7rem;
       width: 100%;
     }
-    .share-modal-actions .btn-close-modal { flex: 1; }
+    .share-modal-actions > button { width: 100%; padding-left: 1rem; padding-right: 1rem; }
+    .share-modal-actions #nativeShareBtn { grid-column: 1 / -1; }
+
+    /* Button labels always stay on one line. */
+    .btn-receive, .btn-again, .btn-ghost, .btn-download, .btn-close-modal,
+    .icon-btn, .need-chip, .box-actions button { white-space: nowrap; }
+    .need-chip { max-width: 100%; }
     .btn-download {
-      flex: 1;
       background: var(--accent);
       color: #fff;
       border: none;

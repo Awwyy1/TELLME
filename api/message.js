@@ -166,34 +166,47 @@ async function verifyTurnstile(token, ip) {
 // Prompt
 // ─────────────────────────────────────────────────────────────
 const needContexts = {
-  pride:    "The person needs to hear that their mother is proud of them — not for achievements or success, but for who they are as a person. Write from a different angle each time: their perseverance, their kindness, their quiet strength, the small daily things they do, the way they've grown.",
+  pride:    "The person needs to hear that their mother is proud of them, not for achievements or success, but for who they are as a person. Write from a different angle each time: their perseverance, their kindness, their quiet strength, the small daily things they do, the way they've grown.",
   love:     "The person needs to hear that they are loved unconditionally. Each time approach it differently: love that doesn't require performance, love that was there before they did anything to earn it, love that remains in failure and mess, love that is simply about their existence.",
   enough:   "The person needs to hear that they are enough exactly as they are. Vary the approach: they don't need to be fixed, they were never broken, they don't need to achieve more to deserve love, their quirks and struggles are part of what makes them whole.",
   safe:     "The person needs to hear that they are safe and protected. Each time come from a different place: safety from judgment, safety to fall apart, safety to be imperfect, a place where they don't have to perform or pretend.",
   strong:   "The person needs to hear that they are strong and capable of getting through hard things. Vary the angle: strength isn't the absence of fear, they've survived harder things than they remember, exhaustion is not weakness, they can do this even shaking.",
-  seen:     "The person needs to hear that they are truly seen and understood — the real them, not the version they show the world. Each time notice something different: their hidden effort, their depth, the way they carry things alone, their light that they don't recognise in themselves.",
+  seen:     "The person needs to hear that they are truly seen and understood: the real them, not the version they show the world. Each time notice something different: their hidden effort, their depth, the way they carry things alone, their light that they don't recognise in themselves.",
   home:     "The person needs to hear that they always belong somewhere and are never truly alone. Vary the approach each time: home as a feeling not a place, the door that is always open, belonging that doesn't expire, the invisible thread that connects them back no matter how far they've gone.",
-  surprise: "Write whatever this person needs to hear most right now — you choose. It could be about love, strength, belonging, being seen, or something else entirely. Trust your instincts as a mother. Make it feel like you know exactly what they needed without them having to ask.",
+  surprise: "Write whatever this person needs to hear most right now. You choose. It could be about love, strength, belonging, being seen, or something else entirely. Trust your instincts as a mother. Make it feel like you know exactly what they needed without them having to ask.",
 
   // Situations — what is happening in the person's life right now.
   interview: "The person has a job interview tomorrow and is nervous. Calm them and remind them who they are, not how to perform. Their worth doesn't depend on the outcome, and you'll be just as proud of them either way. No interview tips or advice.",
   exam:      "The person has an exam coming up and is anxious. Ease the pressure: one test doesn't measure who they are, the effort they've put in counts, and you love them the same whatever the result. No study advice.",
-  newstart:  "The person is starting something new — a new job, a new city, a new chapter — and feels unsure. Speak to the courage it takes to begin, the awkwardness of being new, and how much you believe in them.",
+  newstart:  "The person is starting something new (a new job, a new city, a new chapter) and feels unsure. Speak to the courage it takes to begin, the awkwardness of being new, and how much you believe in them.",
   breakup:   "The person's heart has just been broken by a breakup. Comfort them without criticising the other person and without rushing them to feel better. Their grief makes sense, they are still lovable, and the hurt will soften with time.",
   birthday:  "It is the person's birthday today. Write the birthday letter they may never have received: celebrate the day they arrived, how glad you are that they exist, and who they have become. Warm, a little joyful, never performative.",
   newparent: "The person has just become a parent, perhaps without having had the parent they needed. Reassure them that they don't have to be perfect, that the love they give is real even when they feel unsure, and that they deserve care too.",
-  hardnews:  "The person has just received hard news — it could be about health, family, work or anything else. Do not guess what it is, give advice, or promise that everything will be fine. Simply be with them: they don't have to be okay right now, and they are not alone with this."
+  hardnews:  "The person has just received hard news. It could be about health, family, work or anything else. Do not guess what it is, give advice, or promise that everything will be fine. Simply be with them: they don't have to be okay right now, and they are not alone with this."
 };
 
 const angles = [
   "Begin with an observation about their daily life.",
   "Begin with something you noticed about them years ago.",
-  "Begin with a confession — something you wish you had said sooner.",
+  "Begin with a confession: something you wish you had said sooner.",
   "Begin with what you see in them right now.",
   "Begin with what you want them to know before anything else.",
   "Begin with a quiet truth you've been carrying.",
   "Begin with a memory, real or imagined."
 ];
+
+// Safety net: the prompt forbids dashes, but if one slips through, turn it
+// into a comma. Hyphens inside words (well-being) are kept.
+export function removeDashes(text) {
+  return String(text)
+    .replace(/(\d)\s*[\u2013\u2014]\s*(\d)/g, '$1 to $2')
+    .replace(/\s*[\u2013\u2014]+\s*/g, ', ')
+    .replace(/\s+-{1,2}\s+/g, ', ')
+    .replace(/,\s*([.,;:!?])/g, '$1')
+    .replace(/^[,\s]+/, '')
+    .replace(/[,\s]+$/, '')
+    .replace(/ {2,}/g, ' ');
+}
 
 function buildSystemPrompt() {
   const randomAngle = angles[Math.floor(Math.random() * angles.length)];
@@ -201,10 +214,11 @@ function buildSystemPrompt() {
 This child may never have heard these words from their real mother. Your message may be the first time they ever receive this kind of love.
 
 Write with genuine warmth, not cliches. Be specific and human. Avoid generic motivational language.
-Never use phrases like "know that", "always remember", "never forget" — these are lazy and hollow.
+Never use phrases like "know that", "always remember", "never forget". These are lazy and hollow.
 The message should feel like it comes from a real person who truly knows and loves this child.
-Write 3-5 sentences. Do not start with the word "I" — vary the opening.
-Do not include any salutation or closing — just the body of the message.
+Write 3-5 sentences. Do not start with the word "I". Vary the opening.
+Do not include any salutation or closing, just the body of the message.
+Never use dashes of any kind: no em dashes, no en dashes, and no hyphens used as dashes between words or clauses. Use commas, periods, colons or semicolons instead.
 ${randomAngle}
 Reply with ONLY the message text, nothing else.`;
 }
@@ -469,7 +483,7 @@ export default async function handler(req, res) {
 
     // --- Generate ---
     if (wantsStream) return await streamLetter(res, apiKey, need);
-    const message = await generateWithRetry(apiKey, need);
+    const message = removeDashes(await generateWithRetry(apiKey, need));
     return res.status(200).json({ message });
 
   } catch (err) {

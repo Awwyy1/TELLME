@@ -49,64 +49,64 @@
   // written, and always with an honest note saying so.
   var KEEPSAKE_LETTERS = {
     pride: [
-      "Watching you keep going on the days nobody noticed has been one of the quiet joys of my life. You didn't need a trophy or a title for me to feel this way. The way you are kind when it costs you something, the way you try again — that is what makes me proud. Just you, exactly as you are.",
+      "Watching you keep going on the days nobody noticed has been one of the quiet joys of my life. You didn't need a trophy or a title for me to feel this way. The way you are kind when it costs you something, the way you try again. That is what makes me proud. Just you, exactly as you are.",
       "There is something in the way you carry yourself now that wasn't there years ago, and it moves me every time. You grew into it slowly, mostly alone, and still you came out gentle. Pride is too small a word for what I feel, but it's the closest one I have.",
-      "Nobody handed you an easy road, and you walked it anyway. Not perfectly, not without falling — but honestly, and with a heart that stayed open. That is what I'm proudest of, more than anything you could ever achieve."
+      "Nobody handed you an easy road, and you walked it anyway. Not perfectly, not without falling, but honestly, and with a heart that stayed open. That is what I'm proudest of, more than anything you could ever achieve."
     ],
     love: [
-      "Before you did a single thing, before your first word or your first mistake, you were already loved. Nothing you've done since has changed that, and nothing you do tomorrow will. On the messy days, the quiet days, the days you don't like yourself very much — the love is still here, steady and unbothered.",
+      "Before you did a single thing, before your first word or your first mistake, you were already loved. Nothing you've done since has changed that, and nothing you do tomorrow will. On the messy days, the quiet days, the days you don't like yourself very much, the love is still here, steady and unbothered.",
       "You don't have to earn this. You never did. My love isn't a prize for good behaviour; it is simply what happens when I think of you. Even now, even here, it's wrapped all the way around you.",
       "Some love comes with conditions, and I'm so sorry if that's the kind you learned first. This is the other kind. It stays when you fail, it stays when you're difficult, it stays when you have nothing left to give."
     ],
     enough: [
-      "You keep trying to become someone worth loving, and my heart aches a little every time, because you already are. There is nothing to fix and nothing missing. The parts of you that you hide are not flaws to me — they are simply you, and you are enough.",
+      "You keep trying to become someone worth loving, and my heart aches a little every time, because you already are. There is nothing to fix and nothing missing. The parts of you that you hide are not flaws to me. They are simply you, and you are enough.",
       "Rest for a moment. You don't have to be more productive, more cheerful, more anything for me to be glad you exist. You were enough the day you were born, and you are enough tonight.",
-      "Whatever voice told you that you were too much or not enough — it was wrong. You were never a problem to be solved. You are a whole person, and that has always been plenty."
+      "Whatever voice told you that you were too much or not enough, it was wrong. You were never a problem to be solved. You are a whole person, and that has always been plenty."
     ],
     safe: [
       "Here you can put everything down. You don't have to be strong, or polite, or okay. If you need to cry, cry; if you need to say nothing at all, that's fine too. Nothing you feel will make me pull away.",
-      "Come in, close the door, take off the armour you've been wearing all day. No one here is keeping score. You can be tired, confused, unfinished — and still completely safe.",
+      "Come in, close the door, take off the armour you've been wearing all day. No one here is keeping score. You can be tired, confused, unfinished, and still completely safe.",
       "So many places asked you to be careful, to be quiet, to be good. This isn't one of them. With me, you can fall apart, and I will simply sit beside you until you're ready to stand."
     ],
     strong: [
-      "Look at everything you have already lived through — the nights you thought would never end, and did. You are still here, still trying, and that is what strength actually looks like. You can be scared and keep going at the same time.",
+      "Look at everything you have already lived through: the nights you thought would never end, and did. You are still here, still trying, and that is what strength actually looks like. You can be scared and keep going at the same time.",
       "Being exhausted doesn't mean you're weak; it means you've been carrying a lot for a long time. You've done hard things before, often without anyone noticing. Take a breath. You can do this one too, one small step at a time.",
       "Strength isn't the absence of shaking hands. It's what you've been doing all along: getting up, showing up, trying again. Whatever is in front of you now, you don't have to face it fearless."
     ],
     seen: [
-      "There is so much you do that nobody notices — the effort behind the easy smile, the worries you keep to yourself so others don't have to carry them. I notice. I see the tired parts and the brave parts, and I love all of them.",
+      "There is so much you do that nobody notices: the effort behind the easy smile, the worries you keep to yourself so others don't have to carry them. I notice. I see the tired parts and the brave parts, and I love all of them.",
       "The version of you the world gets is lovely, but it's not the whole story. Underneath there's someone deeper, softer, and more thoughtful than most people take the time to find. That someone is who I see when I look at you.",
-      "You've gotten so good at being fine that people forget to ask. So let me ask: how are you, really? Whatever the answer is, it matters to me — because the real you, all of you, matters to me."
+      "You've gotten so good at being fine that people forget to ask. So let me ask: how are you, really? Whatever the answer is, it matters to me, because the real you, all of you, matters to me."
     ],
     home: [
-      "Wherever you are tonight, however far you've wandered, there is a light on for you. Home was never a building — it's the feeling of being wanted, and you are wanted. The door is open, and it stays open.",
+      "Wherever you are tonight, however far you've wandered, there is a light on for you. Home was never a building. It's the feeling of being wanted, and you are wanted. The door is open, and it stays open.",
       "You belong. Not because you fit in, not because you've earned a place, but simply because you are you. No distance and no amount of time can wear that thread thin.",
       "On the nights you feel like you don't belong anywhere, come back to this: there is a place in my heart shaped exactly like you. Nobody else could ever fill it. You always have somewhere to come home to."
     ],
     surprise: [
-      "Whatever today held, you made it here, and that counts for something. You've been so hard on yourself lately — maybe tonight you could be just a little gentler. You deserve the same kindness you give so easily to everyone else.",
+      "Whatever today held, you made it here, and that counts for something. You've been so hard on yourself lately. Maybe tonight you could be just a little gentler. You deserve the same kindness you give so easily to everyone else.",
       "Sometimes the bravest thing is simply to keep your heart soft in a hard world, and you have. Thank you for still being you. Your existence makes the world warmer.",
       "After this, put the phone down for a moment and take one slow breath. Nothing needs solving in this exact second. You are loved, you are allowed to rest, and tomorrow can wait until tomorrow."
     ],
     interview: [
       "Whatever happens in that room tomorrow, it won't change a single thing about how much you're worth. You don't have to be perfect; you only have to be yourself, and that has always been more than enough. Get some rest tonight. You're ready in all the ways that matter.",
-      "Before you walk in, take one slow breath and remember who you are outside of that room — kind, capable, someone people are lucky to have around. They are deciding about a job, not about you. Either way, you come home to the same love."
+      "Before you walk in, take one slow breath and remember who you are outside of that room: kind, capable, someone people are lucky to have around. They are deciding about a job, not about you. Either way, you come home to the same love."
     ],
     exam: [
       "One exam can measure what you remembered on a single morning, but it can't measure you. The effort you've put in is real, and it counts even if the result doesn't show all of it. Whatever the grade, I'll be just as proud and just as glad you're mine.",
       "Put the notes down for a moment and let your shoulders drop. You've done the work you could do, and the rest isn't yours to carry tonight. You are so much more than any score."
     ],
     newstart: [
-      "Starting over takes a kind of courage most people never notice. Being new is awkward and lonely and a little frightening, and you're doing it anyway. Give yourself time to find your feet — you've done it before, and you'll do it again.",
+      "Starting over takes a kind of courage most people never notice. Being new is awkward and lonely and a little frightening, and you're doing it anyway. Give yourself time to find your feet. You've done it before, and you'll do it again.",
       "Every place that feels like home now once felt strange. This new beginning will too, one small familiar thing at a time. I believe in you completely, even on the days you're not sure you belong there yet."
     ],
     breakup: [
-      "Of course it hurts — you loved with your whole heart, and that is never a mistake. You don't have to be over it by any deadline. Let yourself be sad for as long as you need; you are still so deeply lovable, exactly as you are.",
+      "Of course it hurts. You loved with your whole heart, and that is never a mistake. You don't have to be over it by any deadline. Let yourself be sad for as long as you need; you are still so deeply lovable, exactly as you are.",
       "Tonight you might feel like you're not enough, or that something in you made this happen. Neither is true. Hearts break because they were open, and yours is one of the most open I know. It will mend, slowly, and it will love again."
     ],
     birthday: [
-      "Happy birthday, my love. On this day, the world got you — and it has been warmer ever since. Whatever this year brought, I'm so glad you're here, and I hope today someone celebrates you the way you deserve.",
-      "Another year of you, and I'm grateful for every single day of it. You've grown and stumbled and kept going, and I love who you're becoming. Light a candle for yourself today — you are worth celebrating."
+      "Happy birthday, my love. On this day, the world got you, and it has been warmer ever since. Whatever this year brought, I'm so glad you're here, and I hope today someone celebrates you the way you deserve.",
+      "Another year of you, and I'm grateful for every single day of it. You've grown and stumbled and kept going, and I love who you're becoming. Light a candle for yourself today. You are worth celebrating."
     ],
     newparent: [
       "Look at you, holding a whole new life. You don't need to know everything, and you don't need to become the parent you never had overnight. The tenderness you're already giving is real, and it's enough. Please let someone take care of you, too.",
@@ -114,14 +114,14 @@
     ],
     hardnews: [
       "You don't have to be strong about this right now, and you don't have to understand it all yet. Just breathe. Whatever comes next, you won't face it alone.",
-      "Some news knocks the air out of you, and it's okay to sit down where you are. You don't need a plan tonight or the right words. Let yourself feel what you feel — I'm right here beside you."
+      "Some news knocks the air out of you, and it's okay to sit down where you are. You don't need a plan tonight or the right words. Let yourself feel what you feel. I'm right here beside you."
     ]
   };
 
   var NOTES = {
     offline: "You're offline right now, so this letter was written earlier, with the same love. When you're connected again, a new one can be written for you.",
-    daily_limit: "So many people needed these words today that we've reached our daily limit. This letter was written earlier, with the same love — new ones will be written tomorrow.",
-    daily_visitor_limit: "You've received many letters today. This one was written earlier, with the same love — new ones will be waiting for you tomorrow.",
+    daily_limit: "So many people needed these words today that we've reached our daily limit. This letter was written earlier, with the same love. New ones will be written tomorrow.",
+    daily_visitor_limit: "You've received many letters today. This one was written earlier, with the same love. New ones will be waiting for you tomorrow.",
     verification_failed: "We couldn't confirm the connection, so this letter was written earlier, with the same love. You can try again in a moment.",
     fallback: "We couldn't write a new letter just now, so this one was written earlier, with the same love. You can try again in a moment."
   };
@@ -359,22 +359,46 @@
     setTimeout(function () { if (id === requestId) done(); }, 1250);
   }
 
+  // Letters never contain dashes: any that slip through become commas.
+  // Hyphens inside words (well-being) are kept.
+  function removeDashes(text, isFinal) {
+    var t = String(text)
+      .replace(/(\d)\s*[\u2013\u2014]\s*(\d)/g, "$1 to $2")
+      .replace(/\s*[\u2013\u2014]+\s*/g, ", ")
+      .replace(/\s+-{1,2}\s+/g, ", ")
+      .replace(/,\s*([.,;:!?])/g, "$1")
+      .replace(/^[,\s]+/, "")
+      .replace(/ {2,}/g, " ");
+    return isFinal ? t.replace(/[,\s]+$/, "") : t;
+  }
+
+  // Writing pace. Tune here: milliseconds per character, and extra pauses
+  // after punctuation so the letter reads like it is being written by hand.
+  var PACE = { charMs: 26, commaPauseMs: 110, sentencePauseMs: 320 };
+
   // Reveals text at a calm, handwriting-like pace while it streams in.
   function createWriter(el, onDone) {
-    var target = "", shown = 0, started = false, ended = false, cancelled = false, timer = null;
+    var raw = "", target = "", shown = 0, started = false, ended = false, cancelled = false, timer = null;
     function tick() {
       if (cancelled) return;
       var backlog = target.length - shown;
+      var wait = PACE.charMs;
       if (backlog > 0) {
-        var step = reducedMotion ? backlog : backlog > 160 ? 3 : backlog > 50 ? 2 : 1;
+        // Only a very long backlog speeds up a little, so long letters don't drag.
+        var step = reducedMotion ? backlog : backlog > 350 ? 2 : 1;
         shown = Math.min(target.length, shown + step);
         el.textContent = target.slice(0, shown);
+        var last = target.charAt(shown - 1);
+        if (!reducedMotion && shown < target.length) {
+          if (/[.!?]/.test(last)) wait += PACE.sentencePauseMs;
+          else if (/[,;:]/.test(last)) wait += PACE.commaPauseMs;
+        }
       }
       if (ended && shown >= target.length) { onDone(); return; }
-      timer = setTimeout(tick, 30);
+      timer = setTimeout(tick, wait);
     }
     return {
-      push: function (t) { target = (target + t).replace(/^\s+/, ""); },
+      push: function (t) { raw += t; target = removeDashes(raw, false); },
       start: function () { if (!started) { started = true; tick(); } },
       end: function (finalText) { target = finalText; ended = true; },
       cancel: function () { cancelled = true; clearTimeout(timer); }
@@ -416,7 +440,7 @@
 
     function begin() {
       writer = createWriter($("letterBody"), function () {
-        if (id === requestId) finishMessage(full.trim(), "");
+        if (id === requestId) finishMessage(removeDashes(full, true), "");
       });
       openEnvelope(id, function () {
         if (failed) return; // a keepsake letter is already on screen
@@ -444,11 +468,11 @@
       } else if (evt.done) {
         finished = true;
         if (!full.trim()) { fail("fallback"); return false; }
-        writer.end(full.trim());
+        writer.end(removeDashes(full, true));
         return false;
       }
     }).then(function () {
-      if (!finished) { if (full.trim() && writer) writer.end(full.trim()); else fail("fallback"); }
+      if (!finished) { if (full.trim() && writer) writer.end(removeDashes(full, true)); else fail("fallback"); }
     }, function () {
       if (!finished) fail("fallback");
     });
@@ -486,7 +510,7 @@
           .catch(function () { return {}; })
           .then(function (d) {
             if (r.ok && d && d.message) {
-              openEnvelope(id, function () { showMessage(d.message, need, ""); });
+              openEnvelope(id, function () { showMessage(removeDashes(d.message, true), need, ""); });
             } else if (r.status === 429 && d && d.code === "rate_limited") {
               showToast("Take a breath… try again in " + (d.retryAfter || 60) + "s");
               restoreView(prev);
@@ -825,7 +849,7 @@
         nativeBtn.hidden = !nativeOk;
         dlBtn.className = nativeOk ? "btn-close-modal" : "btn-download";
         $("shareHint").textContent = nativeOk
-          ? "Share straight to Instagram, Telegram or Messages — or save it"
+          ? "Share straight to Instagram, Telegram or Messages, or save it"
           : "Save the image to share on Instagram & Stories";
 
         openDialog($("shareOverlay"), nativeOk ? nativeBtn : dlBtn);
@@ -842,7 +866,7 @@
     navigator.share({ files: [share.file], title: "A letter from mom", text: "tellme.mom" })
       .catch(function (err) {
         if (err && err.name === "AbortError") return; // user closed the share sheet
-        showToast("Couldn't open sharing — try Save image");
+        showToast("Couldn't open sharing. Try Save image");
       });
   });
 

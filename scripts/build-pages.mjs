@@ -116,7 +116,7 @@ ${t.letters.map((l) => `      <article class="letter">
 
     <section class="cta">
       <p>Every letter on tellme.mom can be written fresh, just for the moment you're in.</p>
-      <a class="btn" href="/?need=${t.need}">${heart}Receive a letter about ${esc(t.label)}</a>
+      <a class="btn" href="/?need=${t.need}">${heart}Receive a letter written for you</a>
     </section>
 
     <section class="more" aria-labelledby="more-title">
