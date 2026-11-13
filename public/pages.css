@@ -181,6 +181,7 @@ a { color: inherit; }
   box-shadow: 0 12px 40px rgba(139,79,58,0.25);
 }
 .btn svg { width: 15px; height: 15px; opacity: 0.75; }
+.btn, .chip, .theme-toggle { white-space: nowrap; }
 
 .section-title {
   font-family: 'Cormorant Garamond', serif;
